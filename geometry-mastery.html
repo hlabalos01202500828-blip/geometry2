@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 GEOMETRY MASTERY — Complete Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@400;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08100a;
+  --surface: #0d180f;
+  --card: #122015;
+  --card2: #172a1a;
+  --border: rgba(180,150,60,0.15);
+  --primary: #d4af37;
+  --primary-dim: rgba(212,175,55,0.12);
+  --secondary: #4ade80;
+  --secondary-dim: rgba(74,222,128,0.12);
+  --success: #4ade80;
+  --success-dim: rgba(74,222,128,0.15);
+  --warning: #fb923c;
+  --error: #f87171;
+  --accent: #c084fc;
+  --accent-dim: rgba(192,132,252,0.12);
+  --text: #f0e8d8;
+  --text-muted: #a89880;
+  --text-dim: #5a6650;
+  --r: 10px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background-image:
+  radial-gradient(circle at 15% 25%, rgba(212,175,55,0.04) 0%, transparent 50%),
+  radial-gradient(circle at 85% 75%, rgba(74,222,128,0.03) 0%, transparent 50%),
+  linear-gradient(rgba(212,175,55,0.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(212,175,55,0.025) 1px,transparent 1px);
+background-size:100% 100%,100% 100%,56px 56px,56px 56px;pointer-events:none;z-index:0}
+
+/* HEADER */
+#app-header{position:sticky;top:0;z-index:100;background:rgba(8,16,10,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:10px 20px;flex-wrap:wrap}
+.app-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:900;color:var(--primary);letter-spacing:0.06em;white-space:nowrap}
+.app-title span{color:var(--secondary)}
+.header-sub{font-size:0.68rem;color:var(--text-dim);letter-spacing:0.18em;font-family:'Fira Code',monospace}
+.xp-container{display:flex;align-items:center;gap:10px;flex:1;min-width:200px;max-width:380px}
+.level-badge{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;color:var(--bg);background:var(--primary);padding:3px 10px;border-radius:20px;white-space:nowrap}
+.xp-bar-track{flex:1;height:8px;background:var(--card);border-radius:4px;overflow:hidden;min-width:80px}
+.xp-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),#f59e0b);border-radius:4px;transition:width 0.6s ease}
+.xp-text{font-size:0.7rem;color:var(--text-muted);font-family:'Fira Code',monospace;white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.streak-badge{font-size:0.82rem;background:var(--warning);background:rgba(251,146,60,0.15);border:1px solid var(--warning);color:var(--warning);padding:4px 12px;border-radius:20px;font-weight:700}
+.timer-btn{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary);padding:5px 14px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.2s}
+.timer-btn:hover{background:var(--primary);color:var(--bg)}
+
+/* LAYOUT */
+.app-layout{display:flex;min-height:calc(100vh - 56px);position:relative;z-index:1}
+.sidebar{width:245px;min-width:245px;background:var(--surface);border-right:1px solid var(--border);padding:16px 0;overflow-y:auto;position:sticky;top:56px;height:calc(100vh - 56px)}
+.sidebar-header{font-family:'Cinzel',serif;font-size:0.62rem;font-weight:700;color:var(--text-dim);letter-spacing:0.22em;padding:0 16px 12px}
+.topic-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;position:relative}
+.topic-item:hover{background:var(--card);border-left-color:var(--primary)}
+.topic-item.active{background:var(--primary-dim);border-left-color:var(--primary)}
+.topic-icon{font-size:1.05rem;width:24px;text-align:center;flex-shrink:0}
+.topic-info{flex:1;min-width:0}
+.topic-name{font-size:0.8rem;font-weight:700;color:var(--text);line-height:1.2}
+.topic-item.active .topic-name{color:var(--primary)}
+.topic-progress-mini{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.topic-progress-fill{height:100%;background:var(--success);border-radius:2px;transition:width 0.5s}
+.topic-num{font-family:'Fira Code',monospace;font-size:0.63rem;color:var(--text-dim);flex-shrink:0}
+
+.main-content{flex:1;padding:24px;overflow-y:auto}
+
+/* TABS */
+.tab-bar{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);padding:5px;border-radius:12px;margin-bottom:24px;flex-wrap:wrap}
+.tab-btn{flex:1;min-width:80px;padding:8px 12px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.2s}
+.tab-btn:hover{color:var(--text);background:var(--card)}
+.tab-btn.active{background:var(--primary);color:var(--bg)}
+
+/* TOPIC HEADER */
+.topic-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;padding:20px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);position:relative;overflow:hidden}
+.topic-header::before{content:'';position:absolute;top:-20px;right:-20px;width:140px;height:140px;border-radius:50%;background:var(--primary-dim);filter:blur(40px)}
+.topic-header-icon{font-size:2.5rem;flex-shrink:0}
+.topic-header-title{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:900;color:var(--primary);line-height:1.2}
+.topic-header-tagline{font-size:0.83rem;color:var(--text-muted);margin-top:4px;font-style:italic}
+.topic-header-progress{display:flex;align-items:center;gap:10px;margin-top:10px}
+.topic-progress-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;max-width:200px}
+.topic-progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--secondary),var(--primary));border-radius:3px;transition:width 0.5s}
+.topic-progress-text{font-family:'Fira Code',monospace;font-size:0.7rem;color:var(--text-dim)}
+
+/* CONCEPT CARDS */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:20px}
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;transition:border-color 0.2s}
+.concept-card:hover{border-color:rgba(212,175,55,0.3)}
+.concept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),transparent)}
+.concept-card-icon{font-size:1.5rem;margin-bottom:8px}
+.concept-card-title{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;color:var(--primary);margin-bottom:8px}
+.concept-card-body{font-size:0.85rem;color:var(--text-muted);line-height:1.7}
+.concept-card-body strong{color:var(--text)}
+.formula-box{background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:8px;padding:12px 14px;margin:10px 0;font-family:'Fira Code',monospace;font-size:0.85rem;color:var(--primary);line-height:1.8}
+.formula-box .label{font-size:0.7rem;color:var(--text-dim);font-family:'Nunito',sans-serif;margin-bottom:4px;font-weight:700;letter-spacing:0.1em}
+.tip-box{background:rgba(74,222,128,0.07);border-left:3px solid var(--secondary);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:0.83rem;color:var(--text-muted)}
+.tip-box strong{color:var(--secondary)}
+.warn-box{background:rgba(251,146,60,0.07);border-left:3px solid var(--warning);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:0.83rem;color:var(--text-muted)}
+.warn-box strong{color:var(--warning)}
+.eng-box{background:rgba(192,132,252,0.07);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:0.83rem;color:var(--text-muted)}
+.eng-box strong{color:var(--accent)}
+.note-box{background:rgba(212,175,55,0.07);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:0.83rem;color:var(--text-muted)}
+.note-box strong{color:var(--primary)}
+.def-box{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:0.83rem}
+.def-box .term{font-family:'Cinzel',serif;color:var(--primary);font-weight:700;font-size:0.85rem}
+.def-box .definition{color:var(--text-muted);margin-top:2px}
+.section-label{font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;color:var(--text-dim);letter-spacing:0.2em;margin:18px 0 8px;text-transform:uppercase}
+
+/* EXAMPLES */
+.example-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px;overflow:hidden}
+.example-header{padding:14px 18px;background:var(--card2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.example-title{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:700;color:var(--primary)}
+.example-difficulty{font-size:0.7rem;font-family:'Fira Code',monospace;padding:2px 8px;border-radius:10px;font-weight:600}
+.diff-basic{background:rgba(74,222,128,0.15);color:var(--secondary);border:1px solid rgba(74,222,128,0.3)}
+.diff-inter{background:rgba(212,175,55,0.15);color:var(--primary);border:1px solid rgba(212,175,55,0.3)}
+.diff-adv{background:rgba(248,113,113,0.15);color:var(--error);border:1px solid rgba(248,113,113,0.3)}
+.example-problem{padding:14px 18px;font-size:0.88rem;background:rgba(212,175,55,0.04);border-bottom:1px solid var(--border);color:var(--text)}
+.example-problem em{color:var(--primary);font-style:normal;font-family:'Fira Code',monospace}
+.steps-container{padding:14px 18px}
+.step{display:flex;gap:12px;margin-bottom:12px;opacity:0;transform:translateY(8px);transition:all 0.3s ease}
+.step.visible{opacity:1;transform:none}
+.step-num{width:26px;height:26px;min-width:26px;background:var(--primary);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.75rem;font-family:'Cinzel',serif;flex-shrink:0;margin-top:1px}
+.step-content{font-size:0.85rem;color:var(--text-muted);line-height:1.7;flex:1}
+.step-content strong{color:var(--text)}
+.step-content .math{font-family:'Fira Code',monospace;color:var(--primary);background:rgba(212,175,55,0.08);padding:1px 6px;border-radius:4px;font-size:0.82rem}
+.step-content .ans{font-family:'Fira Code',monospace;color:var(--secondary);background:rgba(74,222,128,0.1);padding:2px 8px;border-radius:4px;font-weight:600}
+.step-actions{display:flex;gap:8px;margin-top:10px}
+.step-btn{padding:7px 18px;border:1px solid var(--border);background:var(--card2);color:var(--text-muted);border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.8rem;transition:all 0.2s}
+.step-btn:hover{border-color:var(--primary);color:var(--primary)}
+.step-btn.primary{background:var(--primary-dim);border-color:var(--primary);color:var(--primary)}
+.answer-box{margin-top:10px;padding:12px;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.25);border-radius:8px;font-family:'Fira Code',monospace;font-size:0.88rem;color:var(--secondary)}
+.answer-box .label{font-size:0.7rem;color:var(--text-dim);font-family:'Nunito',sans-serif;margin-bottom:4px;font-weight:700;letter-spacing:0.1em}
+
+/* PRACTICE */
+.quiz-info{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.quiz-score-display{font-family:'Fira Code',monospace;font-size:0.85rem;color:var(--text-muted)}
+.quiz-score-display span{color:var(--primary);font-weight:700}
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;transition:border-color 0.3s}
+.question-card.correct{border-color:rgba(74,222,128,0.5)}
+.question-card.wrong{border-color:rgba(248,113,113,0.4)}
+.question-num{font-family:'Fira Code',monospace;font-size:0.7rem;color:var(--text-dim);margin-bottom:6px;font-weight:600}
+.question-text{font-size:0.9rem;color:var(--text);margin-bottom:14px;line-height:1.6}
+.question-text .math{font-family:'Fira Code',monospace;color:var(--primary);background:rgba(212,175,55,0.08);padding:1px 6px;border-radius:4px}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.option-btn{padding:9px 14px;border:1px solid var(--border);background:var(--card2);color:var(--text-muted);border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.83rem;text-align:left;transition:all 0.2s;line-height:1.4}
+.option-btn:hover:not(:disabled){border-color:var(--primary);color:var(--primary);background:var(--primary-dim)}
+.option-btn.selected-correct{background:rgba(74,222,128,0.12);border-color:var(--success);color:var(--success)}
+.option-btn.selected-wrong{background:rgba(248,113,113,0.1);border-color:var(--error);color:var(--error)}
+.option-btn.reveal-correct{background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.4);color:var(--success)}
+.option-btn:disabled{cursor:default;opacity:0.7}
+.feedback-box{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.83rem;line-height:1.6;display:none}
+.feedback-box.show{display:block}
+.feedback-box.correct{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);color:var(--text-muted)}
+.feedback-box.correct strong{color:var(--success)}
+.feedback-box.wrong{background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);color:var(--text-muted)}
+.feedback-box.wrong strong{color:var(--error)}
+.quiz-controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.quiz-btn{padding:9px 22px;border:none;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;transition:all 0.2s}
+.quiz-btn-primary{background:var(--primary);color:var(--bg)}
+.quiz-btn-primary:hover{opacity:0.88}
+.quiz-btn-secondary{background:var(--card2);border:1px solid var(--border);color:var(--text-muted)}
+.quiz-btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+.quiz-result{padding:20px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);text-align:center;margin-top:16px;display:none}
+.quiz-result.show{display:block}
+.quiz-result-score{font-family:'Cinzel',serif;font-size:2.5rem;font-weight:900;color:var(--primary)}
+.quiz-result-label{font-size:0.85rem;color:var(--text-muted);margin-top:4px}
+.quiz-result-msg{margin-top:12px;font-size:0.9rem;color:var(--text)}
+
+/* FLASHCARDS */
+.fc-container{display:flex;flex-direction:column;align-items:center;gap:20px}
+.fc-progress-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:400px}
+.fc-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background 0.2s}
+.fc-dot.active{background:var(--primary)}
+.fc-dot.done{background:var(--success)}
+.fc-scene{perspective:1000px;width:100%;max-width:520px;height:240px;cursor:pointer}
+.fc-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(.4,0,.2,1)}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.fc-front{background:var(--card);border-color:rgba(212,175,55,0.2)}
+.fc-back{background:var(--card2);transform:rotateY(180deg);border-color:rgba(74,222,128,0.2)}
+.fc-face-label{font-size:0.65rem;font-family:'Fira Code',monospace;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:10px;font-weight:600}
+.fc-front .fc-face-label{color:rgba(212,175,55,0.5)}
+.fc-back .fc-face-label{color:rgba(74,222,128,0.5)}
+.fc-question{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;color:var(--primary);line-height:1.5}
+.fc-answer{font-size:0.88rem;color:var(--text);line-height:1.65;font-family:'Lora',serif}
+.fc-answer .math{font-family:'Fira Code',monospace;color:var(--secondary);font-size:0.9rem}
+.fc-controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.fc-btn{padding:8px 20px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text-muted);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.2s}
+.fc-btn:hover{border-color:var(--primary);color:var(--primary)}
+.fc-btn.active{background:var(--primary-dim);border-color:var(--primary);color:var(--primary)}
+.fc-hint{font-size:0.75rem;color:var(--text-dim);font-style:italic}
+.fc-counter{font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--text-muted)}
+
+/* TIPS PANEL */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:24px}
+.tip-card{background:var(--card);border:1px solid rgba(74,222,128,0.2);border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.tip-card::before{content:'💡';position:absolute;top:12px;right:14px;font-size:1.2rem;opacity:0.3}
+.tip-card-num{font-family:'Fira Code',monospace;font-size:0.68rem;color:var(--secondary);font-weight:600;margin-bottom:6px}
+.tip-card-title{font-weight:800;color:var(--text);margin-bottom:6px;font-size:0.88rem}
+.tip-card-body{font-size:0.82rem;color:var(--text-muted);line-height:1.65}
+.tip-card-body .math{font-family:'Fira Code',monospace;color:var(--primary);font-size:0.8rem}
+
+/* FORMULA SHEET */
+.formula-sheet{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.formula-sheet-title{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:700;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.formula-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(212,175,55,0.07)}
+.formula-row:last-child{border-bottom:none}
+.formula-name{font-size:0.8rem;color:var(--text-muted);min-width:160px;font-style:italic}
+.formula-expr{font-family:'Fira Code',monospace;font-size:0.85rem;color:var(--primary);flex:1}
+
+/* POMODORO */
+.pomo-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center}
+.pomo-overlay.show{display:flex}
+.pomo-modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;min-width:300px;box-shadow:var(--shadow)}
+.pomo-label{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:10px}
+.pomo-time{font-family:'Cinzel',serif;font-size:4rem;font-weight:900;color:var(--primary);line-height:1}
+.pomo-mode{font-size:0.88rem;color:var(--text-muted);margin-top:8px}
+.pomo-btns{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.pomo-btn{padding:9px 22px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text-muted);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;transition:all 0.2s}
+.pomo-btn.start{background:var(--primary);color:var(--bg);border-color:var(--primary)}
+.pomo-btn.start:hover{opacity:0.88}
+.pomo-btn:hover:not(.start){border-color:var(--primary);color:var(--primary)}
+.pomo-progress{width:100%;height:6px;background:var(--bg);border-radius:3px;margin-top:16px;overflow:hidden}
+.pomo-progress-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--primary),#f59e0b);border-radius:3px;transition:width 1s linear}
+
+/* AI TUTOR */
+.ai-fab{position:fixed;bottom:24px;right:24px;z-index:150;width:52px;height:52px;background:var(--primary);border:none;border-radius:50%;cursor:pointer;font-size:1.4rem;box-shadow:0 4px 20px rgba(212,175,55,0.4);transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.ai-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(212,175,55,0.5)}
+.ai-panel{position:fixed;bottom:86px;right:24px;z-index:150;width:340px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);display:none;flex-direction:column;max-height:500px}
+.ai-panel.show{display:flex}
+.ai-panel-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ai-panel-title{font-family:'Cinzel',serif;font-size:0.88rem;font-weight:700;color:var(--primary)}
+.ai-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:color 0.2s}
+.ai-panel-close:hover{color:var(--error)}
+.ai-key-input{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
+.ai-key-input input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-family:'Fira Code',monospace;font-size:0.75rem;outline:none}
+.ai-key-input input:focus{border-color:var(--primary)}
+.ai-key-input input::placeholder{color:var(--text-dim)}
+.ai-key-btn{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;font-weight:700;white-space:nowrap}
+.ai-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:180px}
+.ai-msg{font-size:0.82rem;line-height:1.6;max-width:88%;padding:9px 12px;border-radius:10px}
+.ai-msg.user{background:var(--primary-dim);border:1px solid rgba(212,175,55,0.2);color:var(--text);align-self:flex-end;border-radius:10px 10px 3px 10px}
+.ai-msg.bot{background:var(--card);border:1px solid var(--border);color:var(--text-muted);align-self:flex-start;border-radius:10px 10px 10px 3px}
+.ai-msg.thinking{font-style:italic;color:var(--text-dim)}
+.ai-input-row{padding:10px;border-top:1px solid var(--border);display:flex;gap:8px}
+.ai-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:0.82rem;outline:none;resize:none}
+.ai-input:focus{border-color:var(--primary)}
+.ai-send{background:var(--primary);border:none;color:var(--bg);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:0.88rem;transition:opacity 0.2s}
+.ai-send:hover{opacity:0.85}
+
+/* UTILITIES */
+.hidden{display:none!important}
+.tab-content{display:none}
+.tab-content.active{display:block}
+h3.section-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--primary);margin:20px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="app-header">
+  <div>
+    <div class="app-title">📐 GEOMETRY <span>MASTERY</span></div>
+    <div class="header-sub">COMPLETE GUIDE · FROM FOUNDATIONS TO ADVANCED</div>
+  </div>
+  <div class="xp-container">
+    <div class="level-badge" id="level-badge">Learner I</div>
+    <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-bar"></div></div>
+    <div class="xp-text" id="xp-text">0 / 100 XP</div>
+  </div>
+  <div class="header-right">
+    <div class="streak-badge" id="streak-badge">🔥 0 Streak</div>
+    <button class="timer-btn" onclick="togglePomo()">⏱ Pomodoro</button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">TOPICS</div>
+    <div id="sidebar-topics"></div>
+  </div>
+  <!-- MAIN -->
+  <div class="main-content" id="main-content"></div>
+</div>
+
+<!-- POMODORO -->
+<div class="pomo-overlay" id="pomo-overlay">
+  <div class="pomo-modal">
+    <div class="pomo-label" id="pomo-label">FOCUS SESSION</div>
+    <div class="pomo-time" id="pomo-time">25:00</div>
+    <div class="pomo-mode" id="pomo-mode-text">Study hard — take breaks!</div>
+    <div class="pomo-progress"><div class="pomo-progress-fill" id="pomo-fill"></div></div>
+    <div class="pomo-btns">
+      <button class="pomo-btn start" onclick="togglePomoTimer()">▶ Start</button>
+      <button class="pomo-btn" onclick="resetPomo()">↺ Reset</button>
+      <button class="pomo-btn" onclick="togglePomo()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI TUTOR -->
+<button class="ai-fab" onclick="toggleAI()" title="AI Tutor">🤖</button>
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-panel-header">
+    <div class="ai-panel-title">📐 Geometry AI Tutor</div>
+    <button class="ai-panel-close" onclick="toggleAI()">✕</button>
+  </div>
+  <div class="ai-key-input">
+    <input type="password" id="ai-key" placeholder="sk-ant-... (paste API key)" />
+    <button class="ai-key-btn" onclick="saveKey()">Save</button>
+  </div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-msg bot">Hi! I'm your geometry tutor. Paste your Anthropic API key above, then ask me anything — proofs, formulas, problem-solving help! 📐</div>
+  </div>
+  <div class="ai-input-row">
+    <textarea class="ai-input" id="ai-input" rows="2" placeholder="Ask about any geometry concept..."></textarea>
+    <button class="ai-send" onclick="sendAI()">➤</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const TOPICS = [
+  {
+    id:'foundations', icon:'📍', name:'Foundations',
+    tagline:'Points, lines, planes, angles — the building blocks',
+    learn:[
+      {icon:'🔹',title:'Points, Lines & Planes',body:`
+        <div class="def-box"><span class="term">Point</span><div class="definition">An exact location in space. Has no size — just position. Written as a capital letter: <strong>A</strong>, <strong>B</strong>, <strong>P</strong>.</div></div>
+        <div class="def-box"><span class="term">Line</span><div class="definition">Extends infinitely in both directions. Named by two points or a lowercase letter: <strong>line AB</strong> or <strong>line ℓ</strong>. Has one dimension.</div></div>
+        <div class="def-box"><span class="term">Line Segment</span><div class="definition">Part of a line with two endpoints. Written <strong>AB̄</strong>. Has a definite length.</div></div>
+        <div class="def-box"><span class="term">Ray</span><div class="definition">Starts at a point and extends infinitely in one direction. Written <strong>AB→</strong> (starts at A, through B).</div></div>
+        <div class="def-box"><span class="term">Plane</span><div class="definition">A flat surface extending infinitely in all directions. Has two dimensions. Named by 3 non-collinear points or a letter: Plane <strong>ABC</strong>.</div></div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Two points determine exactly one line. Three non-collinear points determine exactly one plane. Three collinear points are all on the same line — they don't determine a unique plane.</div>
+      `},
+      {icon:'∠',title:'Types of Angles',body:`
+        <div class="formula-box">
+          <div class="label">ANGLE TYPES</div>
+          Acute: 0° &lt; θ &lt; 90°<br>
+          Right: θ = 90° (marked with □)<br>
+          Obtuse: 90° &lt; θ &lt; 180°<br>
+          Straight: θ = 180° (a straight line)<br>
+          Reflex: 180° &lt; θ &lt; 360°
+        </div>
+        <div class="def-box"><span class="term">Complementary Angles</span><div class="definition">Two angles that sum to <strong>90°</strong>. Each is the complement of the other.</div></div>
+        <div class="def-box"><span class="term">Supplementary Angles</span><div class="definition">Two angles that sum to <strong>180°</strong>.</div></div>
+        <div class="def-box"><span class="term">Vertical Angles</span><div class="definition">Non-adjacent angles formed by two intersecting lines. They are always <strong>equal</strong>.</div></div>
+        <div class="def-box"><span class="term">Adjacent Angles</span><div class="definition">Share a common vertex and side but don't overlap.</div></div>
+        <div class="warn-box"><strong>⚠ Common Mistake:</strong> Complementary does NOT mean equal. 30° + 60° = 90° — they're complementary but not equal.</div>
+      `},
+      {icon:'↔',title:'Parallel & Perpendicular Lines',body:`
+        <div class="def-box"><span class="term">Parallel Lines (∥)</span><div class="definition">Lines in the same plane that never intersect. Same slope. Written: <strong>AB ∥ CD</strong>.</div></div>
+        <div class="def-box"><span class="term">Perpendicular Lines (⊥)</span><div class="definition">Lines that intersect at 90°. Their slopes are negative reciprocals: if m₁ = a/b, then m₂ = -b/a.</div></div>
+        <div class="def-box"><span class="term">Transversal</span><div class="definition">A line that crosses two or more other lines.</div></div>
+        <div class="formula-box">
+          <div class="label">ANGLES FORMED BY PARALLEL LINES + TRANSVERSAL</div>
+          Corresponding angles → Equal<br>
+          Alternate interior angles → Equal<br>
+          Alternate exterior angles → Equal<br>
+          Co-interior (same-side interior) → Supplementary (sum = 180°)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> If you see two parallel lines cut by a transversal, all 8 angles formed are either equal to each other or supplementary to each other. Just two values fill all 8 angles!</div>
+      `},
+      {icon:'🧮',title:'Angle Bisectors & Midpoints',body:`
+        <div class="def-box"><span class="term">Angle Bisector</span><div class="definition">A ray that divides an angle into two equal parts. If BD bisects ∠ABC, then ∠ABD = ∠DBC.</div></div>
+        <div class="def-box"><span class="term">Midpoint</span><div class="definition">The point exactly halfway between two endpoints. Divides a segment into two equal parts.</div></div>
+        <div class="def-box"><span class="term">Perpendicular Bisector</span><div class="definition">A line perpendicular to a segment at its midpoint. Every point on it is equidistant from the two endpoints.</div></div>
+        <div class="formula-box">
+          <div class="label">MIDPOINT FORMULA</div>
+          M = ((x₁+x₂)/2, (y₁+y₂)/2)
+        </div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> Midpoints are used in construction to find center points of beams and in GPS systems to find the halfway point of a route.</div>
+      `},
+    ],
+    examples:[
+      {
+        title:'Finding Complementary and Supplementary Angles',diff:'basic',
+        problem:'Angle A = 37°. Find its complement and its supplement.',
+        steps:[
+          {t:'<strong>Complement:</strong> Two angles are complementary when they sum to 90°.',math:'90° − 37° = 53°'},
+          {t:'<strong>Supplement:</strong> Two angles are supplementary when they sum to 180°.',math:'180° − 37° = 143°'},
+          {t:'<strong>Check:</strong> 37° + 53° = 90° ✓ and 37° + 143° = 180° ✓',math:''},
+        ],
+        answer:'Complement = 53°, Supplement = 143°'
+      },
+      {
+        title:'Parallel Lines & Transversal — Angle Relationships',diff:'inter',
+        problem:'Lines ℓ ∥ m are cut by a transversal. One angle formed is 112°. Find all 8 angles.',
+        steps:[
+          {t:'Label the 112° angle. Its vertical angle is also <strong>112°</strong>.',math:'Vertical angles: 112°'},
+          {t:'The supplementary angle to 112° is <strong>68°</strong>.',math:'180° − 112° = 68°'},
+          {t:'That supplement\'s vertical angle is also <strong>68°</strong>.',math:'Vertical angles: 68°'},
+          {t:'<strong>Same pattern repeats</strong> on the second parallel line — 4 more angles: 112°, 112°, 68°, 68°.',math:'Corresponding angles are equal'},
+        ],
+        answer:'4 angles of 112° and 4 angles of 68°'
+      },
+      {
+        title:'Angle Bisector Problem',diff:'adv',
+        problem:'Ray BD bisects ∠ABC. ∠ABD = (3x + 5)° and ∠DBC = (5x − 11)°. Find x and ∠ABC.',
+        steps:[
+          {t:'<strong>Set up equation:</strong> Since BD bisects ∠ABC, both halves are equal.',math:'3x + 5 = 5x − 11'},
+          {t:'<strong>Solve for x:</strong>',math:'5 + 11 = 5x − 3x → 16 = 2x → x = 8'},
+          {t:'<strong>Find ∠ABD:</strong>',math:'3(8) + 5 = 29°'},
+          {t:'<strong>Find ∠ABC:</strong> It\'s twice ∠ABD.',math:'∠ABC = 2 × 29° = 58°'},
+        ],
+        answer:'x = 8, ∠ABC = 58°'
+      }
+    ],
+    tips:[
+      {num:'01',title:'The 8-Angle Trick',body:'Parallel lines + transversal = only 2 angle values. All 8 angles are either equal to or supplementary to each other. Find one and you\'ve found them all.'},
+      {num:'02',title:'Naming Angles Correctly',body:'An angle named ∠ABC means the vertex is at B. The rays go through A and C. When there\'s only one angle at a vertex, you can just say ∠B.'},
+      {num:'03',title:'Vertical Angles — Always Equal',body:'When two straight lines cross, the opposite (vertical) angles are ALWAYS equal. This is one of the most used facts in geometry proofs.'},
+      {num:'04',title:'Look for Straight Lines',body:'A straight line = 180°. Any angles on one side of a line must add up to 180°. This catches a lot of angle-finding problems.'},
+    ],
+    flashcards:[
+      {q:'What is the difference between a line and a line segment?',a:'A line extends infinitely in both directions (no endpoints). A line segment has two fixed endpoints and a definite length.'},
+      {q:'Two angles are complementary. One is 25°. What is the other?',a:'65°. Complementary angles sum to 90°: 90° − 25° = 65°.'},
+      {q:'What are vertical angles?',a:'Non-adjacent angles formed when two lines intersect. They are always equal.'},
+      {q:'Lines ℓ ∥ m, transversal cuts them. Alternate interior angles are...?',a:'Equal (congruent). They are on opposite sides of the transversal, between the parallel lines.'},
+      {q:'What is a perpendicular bisector?',a:'A line that (1) is perpendicular to a segment and (2) passes through the segment\'s midpoint.'},
+      {q:'What are co-interior (same-side interior) angles?',a:'Angles between parallel lines, on the same side of the transversal. They are supplementary (sum to 180°).'},
+      {q:'Define: Reflex angle',a:'An angle greater than 180° and less than 360°.'},
+      {q:'An angle bisector splits ∠XYZ into two equal parts. ∠XYZ = 80°. Each half = ?',a:'40°. The bisector creates two equal angles: 80° ÷ 2 = 40°.'},
+    ],
+    quiz:[
+      {q:'An angle measures 67°. Its supplement is:',opts:['23°','113°','123°','33°'],ans:1,exp:'Supplementary angles sum to 180°. 180° − 67° = 113°.'},
+      {q:'Two lines intersect forming angles of x° and (2x + 30)°. If they are supplementary, x = ?',opts:['50°','60°','70°','40°'],ans:0,exp:'x + 2x + 30 = 180 → 3x = 150 → x = 50°.'},
+      {q:'Parallel lines are cut by a transversal. One angle = 75°. The co-interior angle on the same side is:',opts:['75°','105°','15°','115°'],ans:1,exp:'Co-interior angles are supplementary: 180° − 75° = 105°.'},
+      {q:'Which set of angle measures are complementary?',opts:['50°, 130°','45°, 55°','40°, 50°','30°, 60°'],ans:2,exp:'Complementary = sum to 90°. 40° + 50° = 90°.'},
+      {q:'A ray bisects a 96° angle. Each resulting angle is:',opts:['48°','24°','96°','192°'],ans:0,exp:'96° ÷ 2 = 48°.'},
+      {q:'Vertical angles are always:',opts:['Supplementary','Complementary','Congruent (equal)','Right angles'],ans:2,exp:'Vertical angles are always equal. This is the Vertical Angle Theorem.'},
+      {q:'If ∠ABD = (4x − 10)° and ∠DBC = (2x + 16)° and BD bisects ∠ABC, find x.',opts:['x = 10','x = 13','x = 11','x = 8'],ans:1,exp:'4x − 10 = 2x + 16 → 2x = 26 → x = 13.'},
+      {q:'What is the name of the angle formed between a transversal and two parallel lines that are on opposite sides of the transversal and outside the parallel lines?',opts:['Alternate interior','Co-interior','Corresponding','Alternate exterior'],ans:3,exp:'Alternate exterior angles are outside the parallel lines on opposite sides of the transversal — and they are equal.'},
+      {q:'How many points are needed to define a unique plane?',opts:['2','3 collinear','3 non-collinear','4'],ans:2,exp:'Exactly 3 non-collinear points define a unique plane. If they were collinear, infinitely many planes could pass through them.'},
+      {q:'∠A + ∠B = 180° and ∠A = 3∠B. Find ∠B.',opts:['45°','60°','90°','30°'],ans:0,exp:'3∠B + ∠B = 180 → 4∠B = 180 → ∠B = 45°.'},
+    ]
+  },
+  {
+    id:'triangles', icon:'🔺', name:'Triangles',
+    tagline:'The most fundamental polygon — properties & theorems',
+    learn:[
+      {icon:'📏',title:'Triangle Classification',body:`
+        <div class="section-label">By Sides</div>
+        <div class="def-box"><span class="term">Equilateral</span><div class="definition">All 3 sides equal, all 3 angles equal (60° each).</div></div>
+        <div class="def-box"><span class="term">Isosceles</span><div class="definition">Exactly 2 sides equal. The angles opposite the equal sides (base angles) are also equal.</div></div>
+        <div class="def-box"><span class="term">Scalene</span><div class="definition">All 3 sides different. All 3 angles different.</div></div>
+        <div class="section-label">By Angles</div>
+        <div class="def-box"><span class="term">Acute</span><div class="definition">All three angles are less than 90°.</div></div>
+        <div class="def-box"><span class="term">Right</span><div class="definition">One angle is exactly 90°. The side opposite it is the hypotenuse.</div></div>
+        <div class="def-box"><span class="term">Obtuse</span><div class="definition">One angle is greater than 90°.</div></div>
+        <div class="tip-box"><strong>💡 Tip:</strong> A triangle CANNOT have two right angles or two obtuse angles — the angles would sum to more than 180°!</div>
+      `},
+      {icon:'∑',title:'Triangle Angle Theorems',body:`
+        <div class="formula-box">
+          <div class="label">TRIANGLE ANGLE SUM THEOREM</div>
+          ∠A + ∠B + ∠C = 180°<br><br>
+          <div class="label">EXTERIOR ANGLE THEOREM</div>
+          Exterior angle = sum of the two non-adjacent interior angles<br>
+          ∠ext = ∠A + ∠B (where ∠ext is at vertex C)
+        </div>
+        <div class="def-box"><span class="term">Triangle Inequality Theorem</span><div class="definition">The sum of any two sides must be <strong>greater than</strong> the third side. For sides a, b, c: a + b > c, a + c > b, b + c > a.</div></div>
+        <div class="warn-box"><strong>⚠ Key Check:</strong> Before solving a triangle problem, verify it's a valid triangle using the Triangle Inequality. Sides 2, 3, 6 do NOT form a triangle (2 + 3 = 5 < 6)!</div>
+        <div class="note-box"><strong>📝 Note:</strong> The exterior angle theorem is incredibly useful — it lets you find angles without needing all three interior angles first.</div>
+      `},
+      {icon:'≅',title:'Triangle Congruence (SSS, SAS, ASA, AAS, HL)',body:`
+        <div class="formula-box">
+          <div class="label">CONGRUENCE POSTULATES & THEOREMS</div>
+          SSS: Side-Side-Side — all 3 sides equal<br>
+          SAS: Side-Angle-Side — 2 sides + included angle<br>
+          ASA: Angle-Side-Angle — 2 angles + included side<br>
+          AAS: Angle-Angle-Side — 2 angles + non-included side<br>
+          HL: Hypotenuse-Leg (right triangles only)
+        </div>
+        <div class="warn-box"><strong>⚠ NOT Valid:</strong> AAA only proves similarity, NOT congruence. SSA (side-side-angle) is also NOT a valid congruence postulate — it can produce two different triangles (the ambiguous case)!</div>
+        <div class="tip-box"><strong>💡 Memory Trick:</strong> "SSS, SAS, ASA, AAS — all valid. AAA and SSA — no way!"</div>
+      `},
+      {icon:'∼',title:'Triangle Similarity (AA, SAS, SSS)',body:`
+        <div class="formula-box">
+          <div class="label">SIMILARITY POSTULATES</div>
+          AA: Angle-Angle — 2 pairs of equal angles → similar<br>
+          SAS~: 2 sides proportional + included angle equal<br>
+          SSS~: All 3 pairs of sides proportional
+        </div>
+        <div class="def-box"><span class="term">Corresponding Sides</span><div class="definition">In similar triangles, corresponding sides are proportional: a/a' = b/b' = c/c' = k (the scale factor).</div></div>
+        <div class="def-box"><span class="term">Scale Factor</span><div class="definition">The ratio of corresponding sides. If k = 2, the new triangle is twice as large.</div></div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> Architects use similar triangles to scale blueprints. Surveyors use them to measure heights of buildings and mountains indirectly.</div>
+      `},
+      {icon:'📐',title:'Special Right Triangles',body:`
+        <div class="formula-box">
+          <div class="label">45-45-90 TRIANGLE</div>
+          Legs: a, a<br>
+          Hypotenuse: a√2<br>
+          Ratio: 1 : 1 : √2
+        </div>
+        <div class="formula-box">
+          <div class="label">30-60-90 TRIANGLE</div>
+          Short leg (opp 30°): a<br>
+          Long leg (opp 60°): a√3<br>
+          Hypotenuse (opp 90°): 2a<br>
+          Ratio: 1 : √3 : 2
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Memorize these ratios. In 30-60-90: the hypotenuse is always DOUBLE the short leg. In 45-45-90: just multiply any leg by √2 to get the hypotenuse.</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Finding a Missing Angle',diff:'basic',
+        problem:'In triangle ABC, ∠A = 55° and ∠B = 78°. Find ∠C.',
+        steps:[
+          {t:'<strong>Triangle Angle Sum:</strong> All angles in a triangle add to 180°.',math:'∠A + ∠B + ∠C = 180°'},
+          {t:'<strong>Substitute known values:</strong>',math:'55° + 78° + ∠C = 180°'},
+          {t:'<strong>Solve:</strong>',math:'133° + ∠C = 180° → ∠C = 47°'},
+        ],
+        answer:'∠C = 47°'
+      },
+      {
+        title:'Using the Exterior Angle Theorem',diff:'inter',
+        problem:'An exterior angle of a triangle is 115°. Two interior angles are 65° and x°. Find x.',
+        steps:[
+          {t:'<strong>Exterior Angle Theorem:</strong> Exterior angle = sum of two non-adjacent interior angles.',math:'115° = 65° + x'},
+          {t:'<strong>Solve:</strong>',math:'x = 115° − 65° = 50°'},
+          {t:'<strong>Verify:</strong> Third angle = 180° − 65° − 50° = 65°. Exterior = 180° − 65° = 115° ✓',math:''},
+        ],
+        answer:'x = 50°'
+      },
+      {
+        title:'Similar Triangles — Find the Missing Side',diff:'inter',
+        problem:'△ABC ~ △DEF. AB = 8, BC = 12, EF = 9. Find DE.',
+        steps:[
+          {t:'<strong>Similar triangles:</strong> Corresponding sides are proportional.',math:'AB/DE = BC/EF'},
+          {t:'<strong>Substitute:</strong>',math:'8/DE = 12/9'},
+          {t:'<strong>Cross multiply:</strong>',math:'12 · DE = 8 · 9 = 72'},
+          {t:'<strong>Solve:</strong>',math:'DE = 72/12 = 6'},
+        ],
+        answer:'DE = 6'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Exterior Angle Shortcut',body:'The exterior angle of a triangle equals the sum of the two remote interior angles. Skip adding all 3 angles and go straight to the answer.'},
+      {num:'02',title:'Isosceles Triangle Angles',body:'In an isosceles triangle, the BASE ANGLES (the angles opposite the equal sides) are equal. If the apex angle is 40°, each base angle = (180° − 40°)/2 = 70°.'},
+      {num:'03',title:'Can These Be a Triangle?',body:'Quick check: add the two smaller sides. If their sum > third side, it\'s valid. If equal or less, impossible.'},
+      {num:'04',title:'45-45-90 Fast Trick',body:'If you see a right isosceles triangle (legs equal), just multiply any leg by √2 to get hypotenuse. No Pythagorean theorem needed!'},
+    ],
+    flashcards:[
+      {q:'What is the Triangle Angle Sum Theorem?',a:'All three interior angles of a triangle sum to 180°.'},
+      {q:'What does the Exterior Angle Theorem state?',a:'An exterior angle of a triangle equals the sum of the two non-adjacent (remote) interior angles.'},
+      {q:'What are the side ratios of a 30-60-90 triangle?',a:'Short leg : Long leg : Hypotenuse = 1 : √3 : 2'},
+      {q:'What are the side ratios of a 45-45-90 triangle?',a:'Leg : Leg : Hypotenuse = 1 : 1 : √2'},
+      {q:'What does SSS congruence mean?',a:'If all three sides of one triangle are equal to all three sides of another, the triangles are congruent.'},
+      {q:'Why is AAA not a congruence postulate?',a:'AAA only proves similarity (same shape), not congruence (same size). You can have infinitely many triangles with the same angles but different sizes.'},
+      {q:'What is the Triangle Inequality Theorem?',a:'The sum of any two sides of a triangle must be greater than the third side.'},
+      {q:'In △ABC ~ △DEF with scale factor k = 3, if AB = 5, what is DE?',a:'DE = 15. Corresponding sides scale by the scale factor: DE = k × AB = 3 × 5 = 15.'},
+    ],
+    quiz:[
+      {q:'A triangle has angles 2x°, 3x°, and 4x°. Find the value of x.',opts:['18','20','15','25'],ans:1,exp:'2x + 3x + 4x = 180 → 9x = 180 → x = 20.'},
+      {q:'An exterior angle of a triangle is 130°. One non-adjacent interior angle is 70°. The other is:',opts:['60°','70°','50°','80°'],ans:0,exp:'Exterior = sum of two remote interior. 130° = 70° + ? → ? = 60°.'},
+      {q:'Can a triangle have sides of length 4, 7, and 12?',opts:['Yes','No — 4+7 < 12','No — too obtuse','Yes, if right triangle'],ans:1,exp:'4 + 7 = 11, which is less than 12. Triangle Inequality is violated — not a valid triangle.'},
+      {q:'△PQR ≅ △XYZ and PQ = 10. Which side of △XYZ equals 10?',opts:['YZ','XZ','XY','None'],ans:2,exp:'Congruent triangles: corresponding parts are equal. PQ corresponds to XY.'},
+      {q:'A 45-45-90 triangle has legs of 7. The hypotenuse is:',opts:['7','14','7√2','7√3'],ans:2,exp:'In a 45-45-90 triangle, hypotenuse = leg × √2 = 7√2.'},
+      {q:'In a 30-60-90 triangle, the short leg = 5. The hypotenuse is:',opts:['5√2','5√3','10','10√3'],ans:2,exp:'Hypotenuse = 2 × short leg = 2 × 5 = 10.'},
+      {q:'Which set could be side lengths of a valid triangle?',opts:['1, 2, 3','5, 5, 11','6, 8, 10','2, 3, 7'],ans:2,exp:'6+8=14>10 ✓, 6+10=16>8 ✓, 8+10=18>6 ✓. Also a Pythagorean triple!'},
+      {q:'Two triangles are similar with scale factor 1:4. If a side of the small triangle is 3, the corresponding side of the large is:',opts:['3/4','12','7','3'],ans:1,exp:'Scale factor 1:4 means large = 4 × small = 4 × 3 = 12.'},
+      {q:'Which is NOT a valid triangle congruence postulate?',opts:['SSS','SAS','SSA','AAS'],ans:2,exp:'SSA is the ambiguous case — it does not guarantee congruence because two different triangles can satisfy the same SSA conditions.'},
+      {q:'An isosceles triangle has an apex angle of 50°. Each base angle is:',opts:['50°','65°','130°','25°'],ans:1,exp:'Base angles = (180° − 50°) / 2 = 130° / 2 = 65°.'},
+    ]
+  },
+  {
+    id:'polygons', icon:'⬡', name:'Quadrilaterals & Polygons',
+    tagline:'Four-sided figures and beyond — properties & angle sums',
+    learn:[
+      {icon:'📐',title:'Polygon Basics & Angle Formulas',body:`
+        <div class="def-box"><span class="term">Polygon</span><div class="definition">A closed 2D figure with straight sides. Named by number of sides: triangle (3), quadrilateral (4), pentagon (5), hexagon (6), heptagon (7), octagon (8), nonagon (9), decagon (10).</div></div>
+        <div class="def-box"><span class="term">Regular Polygon</span><div class="definition">All sides equal AND all angles equal. A regular triangle = equilateral triangle. A regular quadrilateral = square.</div></div>
+        <div class="formula-box">
+          <div class="label">INTERIOR ANGLE SUM</div>
+          S = (n − 2) × 180°, where n = number of sides<br><br>
+          <div class="label">EACH INTERIOR ANGLE (regular polygon)</div>
+          Each = (n − 2) × 180° / n<br><br>
+          <div class="label">EXTERIOR ANGLE SUM (any convex polygon)</div>
+          Always = 360° (regardless of number of sides!)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> The exterior angle sum of ANY convex polygon is always 360°. So each exterior angle of a regular n-gon = 360°/n. This is often quicker than using the interior angle formula!</div>
+      `},
+      {icon:'⬛',title:'Quadrilaterals — The Family Tree',body:`
+        <div class="formula-box">
+          <div class="label">HIERARCHY (each inherits properties of those above)</div>
+          Quadrilateral (4 sides, angle sum 360°)<br>
+          └─ Trapezoid (1 pair parallel sides)<br>
+          &nbsp;&nbsp;&nbsp;└─ Isosceles Trapezoid (legs equal, base ∠s equal)<br>
+          └─ Parallelogram (2 pairs parallel sides)<br>
+          &nbsp;&nbsp;&nbsp;├─ Rectangle (all angles 90°)<br>
+          &nbsp;&nbsp;&nbsp;├─ Rhombus (all sides equal)<br>
+          &nbsp;&nbsp;&nbsp;└─ Square (rectangle + rhombus)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> A square is BOTH a rectangle and a rhombus. A rectangle is a parallelogram. A rhombus is a parallelogram. But a parallelogram is NOT a rectangle (unless it has right angles).</div>
+      `},
+      {icon:'▱',title:'Parallelogram Properties',body:`
+        <div class="formula-box">
+          <div class="label">PARALLELOGRAM PROPERTIES</div>
+          1. Opposite sides are parallel and equal (AB∥CD, AB = CD)<br>
+          2. Opposite angles are equal (∠A = ∠C, ∠B = ∠D)<br>
+          3. Consecutive angles are supplementary (∠A + ∠B = 180°)<br>
+          4. Diagonals bisect each other (meet at midpoints)<br>
+          5. Each diagonal divides it into 2 congruent triangles
+        </div>
+        <div class="formula-box">
+          <div class="label">SPECIAL PROPERTIES</div>
+          Rectangle: diagonals are EQUAL in length<br>
+          Rhombus: diagonals are PERPENDICULAR bisectors of each other<br>
+          Square: diagonals are equal AND perpendicular
+        </div>
+      `},
+      {icon:'🔷',title:'Trapezoids & Kites',body:`
+        <div class="def-box"><span class="term">Trapezoid</span><div class="definition">Exactly one pair of parallel sides (called bases). The parallel sides are base₁ and base₂. Non-parallel sides are called legs.</div></div>
+        <div class="formula-box">
+          <div class="label">ISOSCELES TRAPEZOID</div>
+          Legs are equal<br>
+          Base angles are equal (∠A = ∠B on each base)<br>
+          Diagonals are equal in length
+        </div>
+        <div class="def-box"><span class="term">Kite</span><div class="definition">Two pairs of consecutive equal sides. Diagonals are perpendicular. One diagonal is the axis of symmetry (bisects the other).</div></div>
+        <div class="formula-box">
+          <div class="label">MIDSEGMENT (Trapezoid Midsegment Theorem)</div>
+          Midsegment length = (base₁ + base₂) / 2
+        </div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Interior Angle Sum of a Hexagon',diff:'basic',
+        problem:'Find the sum of interior angles of a regular hexagon and each interior angle.',
+        steps:[
+          {t:'<strong>Formula:</strong> Interior angle sum = (n−2) × 180°',math:'n = 6 sides'},
+          {t:'<strong>Calculate sum:</strong>',math:'(6−2) × 180° = 4 × 180° = 720°'},
+          {t:'<strong>Each interior angle</strong> (regular hexagon, all equal):',math:'720° / 6 = 120°'},
+        ],
+        answer:'Sum = 720°, each angle = 120°'
+      },
+      {
+        title:'Parallelogram — Find the Missing Angles',diff:'inter',
+        problem:'Parallelogram ABCD has ∠A = (3x + 10)° and ∠B = (5x − 30)°. Find all four angles.',
+        steps:[
+          {t:'<strong>Key property:</strong> Consecutive angles in a parallelogram are supplementary.',math:'∠A + ∠B = 180°'},
+          {t:'<strong>Set up and solve:</strong>',math:'(3x+10) + (5x−30) = 180 → 8x − 20 = 180 → 8x = 200 → x = 25'},
+          {t:'<strong>Find ∠A and ∠B:</strong>',math:'∠A = 3(25)+10 = 85°, ∠B = 5(25)−30 = 95°'},
+          {t:'<strong>Find ∠C and ∠D:</strong> Opposite angles are equal.',math:'∠C = ∠A = 85°, ∠D = ∠B = 95°'},
+          {t:'<strong>Check:</strong> 85° + 95° + 85° + 95° = 360° ✓',math:''},
+        ],
+        answer:'∠A = ∠C = 85°, ∠B = ∠D = 95°'
+      },
+      {
+        title:'Trapezoid Midsegment',diff:'inter',
+        problem:'A trapezoid has parallel bases of 14 cm and 22 cm. Find the length of the midsegment.',
+        steps:[
+          {t:'<strong>Midsegment theorem:</strong> Midsegment = average of the two bases.',math:'Midsegment = (b₁ + b₂) / 2'},
+          {t:'<strong>Substitute:</strong>',math:'Midsegment = (14 + 22) / 2 = 36 / 2 = 18 cm'},
+        ],
+        answer:'Midsegment = 18 cm'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Exterior Angle = 360°/n Trick',body:'For a regular polygon, don\'t use the interior formula first. Just do 360°/n for each exterior angle, then 180° − that for each interior angle.'},
+      {num:'02',title:'Quadrilateral Angle Sum',body:'Every quadrilateral\'s interior angles sum to 360° — always. Divide any quadrilateral into 2 triangles with a diagonal: 2 × 180° = 360°.'},
+      {num:'03',title:'Parallelogram Diagonal Property',body:'Diagonals of a parallelogram bisect each other — they cut each other exactly in half. This is a common trick question.'},
+      {num:'04',title:'Is It a Parallelogram?',body:'To prove a quad is a parallelogram: show EITHER both pairs of opposite sides parallel, OR both pairs of opposite sides equal, OR diagonals bisect each other, OR one pair of sides is both parallel AND equal.'},
+    ],
+    flashcards:[
+      {q:'What is the interior angle sum formula for any polygon?',a:'Sum = (n − 2) × 180°, where n = number of sides.'},
+      {q:'What is the exterior angle sum of any convex polygon?',a:'Always 360°, regardless of the number of sides.'},
+      {q:'List the 5 properties of a parallelogram.',a:'(1) Opposite sides parallel, (2) Opposite sides equal, (3) Opposite angles equal, (4) Consecutive angles supplementary, (5) Diagonals bisect each other.'},
+      {q:'What makes a rectangle special among parallelograms?',a:'All four angles are 90°, and the diagonals are equal in length.'},
+      {q:'What makes a rhombus special among parallelograms?',a:'All four sides are equal, and the diagonals are perpendicular bisectors of each other.'},
+      {q:'What is the midsegment theorem for trapezoids?',a:'The midsegment (connecting midpoints of the legs) is parallel to the bases and equals half their sum: M = (b₁ + b₂)/2.'},
+      {q:'How many diagonals does a hexagon have?',a:'9 diagonals. Formula: n(n−3)/2 = 6(3)/2 = 9.'},
+      {q:'Each interior angle of a regular polygon = 150°. How many sides?',a:'n = 12 sides. Using 360°/n = 30° exterior angle → n = 360/30 = 12.'},
+    ],
+    quiz:[
+      {q:'Interior angle sum of a decagon (10 sides)?',opts:['1440°','1260°','1800°','720°'],ans:0,exp:'(10−2) × 180° = 8 × 180° = 1440°.'},
+      {q:'Each interior angle of a regular octagon is:',opts:['120°','135°','150°','144°'],ans:1,exp:'(8−2)×180°/8 = 6×180°/8 = 1080°/8 = 135°.'},
+      {q:'Parallelogram PQRS: ∠P = 72°. What is ∠Q?',opts:['72°','108°','144°','36°'],ans:1,exp:'Consecutive angles in a parallelogram are supplementary: 180° − 72° = 108°.'},
+      {q:'A quadrilateral has angles 80°, 100°, 90°, and x°. Find x.',opts:['90°','80°','100°','70°'],ans:0,exp:'80 + 100 + 90 + x = 360 → 270 + x = 360 → x = 90°.'},
+      {q:'Trapezoid with bases 10 and 16. Midsegment length?',opts:['13','26','6','8'],ans:0,exp:'Midsegment = (10 + 16)/2 = 26/2 = 13.'},
+      {q:'Which quadrilateral has perpendicular diagonals that are NOT equal?',opts:['Rectangle','Square','Rhombus','Isosceles Trapezoid'],ans:2,exp:'A rhombus has perpendicular diagonals that bisect each other, but they\'re not necessarily equal unless it\'s a square.'},
+      {q:'How many sides does a regular polygon have if each exterior angle = 24°?',opts:['12','15','18','20'],ans:1,exp:'Number of sides = 360°/24° = 15.'},
+      {q:'A kite\'s diagonals are:',opts:['Equal and parallel','Perpendicular','Equal and perpendicular','Parallel and equal'],ans:1,exp:'A kite\'s diagonals are perpendicular to each other. They are generally not equal.'},
+      {q:'In a rectangle, the diagonals:',opts:['Are perpendicular','Bisect each other and are equal','Are perpendicular and equal','Only bisect each other'],ans:1,exp:'Rectangle diagonals bisect each other (parallelogram property) AND are equal in length (rectangle property).'},
+      {q:'A regular polygon has interior angles of 108°. What polygon is it?',opts:['Hexagon','Octagon','Pentagon','Heptagon'],ans:2,exp:'Interior angle = (n−2)×180°/n = 108 → 180n−360 = 108n → 72n = 360 → n = 5. Pentagon!'},
+    ]
+  },
+  {
+    id:'circles', icon:'⭕', name:'Circles',
+    tagline:'Radius, arcs, chords, tangents, inscribed angles',
+    learn:[
+      {icon:'🔵',title:'Circle Fundamentals',body:`
+        <div class="def-box"><span class="term">Circle</span><div class="definition">The set of all points equidistant from a center point. The distance = <strong>radius (r)</strong>.</div></div>
+        <div class="formula-box">
+          <div class="label">KEY MEASUREMENTS</div>
+          Diameter: d = 2r (passes through center)<br>
+          Circumference: C = 2πr = πd<br>
+          Area: A = πr²
+        </div>
+        <div class="def-box"><span class="term">Chord</span><div class="definition">A line segment with both endpoints ON the circle. The diameter is the longest chord.</div></div>
+        <div class="def-box"><span class="term">Secant</span><div class="definition">A line that intersects a circle at TWO points.</div></div>
+        <div class="def-box"><span class="term">Tangent</span><div class="definition">A line that touches a circle at exactly ONE point (the point of tangency). A tangent is ALWAYS perpendicular to the radius at that point.</div></div>
+      `},
+      {icon:'🔀',title:'Arcs & Central Angles',body:`
+        <div class="def-box"><span class="term">Central Angle</span><div class="definition">Vertex at the CENTER of the circle. The arc it intercepts has the SAME measure as the angle.</div></div>
+        <div class="def-box"><span class="term">Arc</span><div class="definition">A portion of the circle's circumference. Minor arc < 180°. Major arc > 180°. Semicircle = 180°.</div></div>
+        <div class="formula-box">
+          <div class="label">ARC LENGTH</div>
+          L = (θ/360°) × 2πr, where θ is the central angle in degrees<br><br>
+          <div class="label">SECTOR AREA</div>
+          A = (θ/360°) × πr²
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Central angle = arc measure (in degrees). They're literally the same number. A 60° central angle cuts off a 60° arc.</div>
+      `},
+      {icon:'∠',title:'Inscribed Angle Theorem',body:`
+        <div class="formula-box">
+          <div class="label">INSCRIBED ANGLE THEOREM</div>
+          Inscribed angle = ½ × intercepted arc<br><br>
+          An inscribed angle is formed by two chords meeting ON the circle.
+        </div>
+        <div class="def-box"><span class="term">Corollary 1</span><div class="definition">All inscribed angles that intercept the same arc are equal.</div></div>
+        <div class="def-box"><span class="term">Corollary 2</span><div class="definition">An angle inscribed in a SEMICIRCLE is always 90°. (The diameter subtends a right angle at the circumference — Thales' Theorem.)</div></div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> Thales' Theorem is used in engineering to find right angles — if you need to verify a 90° angle, check if the vertex lies on the circle with the hypotenuse as diameter.</div>
+      `},
+      {icon:'🧮',title:'Chord, Tangent & Secant Theorems',body:`
+        <div class="formula-box">
+          <div class="label">CHORD INTERSECTION (inside circle)</div>
+          If two chords intersect at P inside the circle:<br>
+          a × b = c × d (products of segments are equal)<br><br>
+          <div class="label">TANGENT-TANGENT (external point)</div>
+          Two tangents from same external point are EQUAL in length<br><br>
+          <div class="label">SECANT-SECANT (external point)</div>
+          (whole₁) × (external₁) = (whole₂) × (external₂)<br><br>
+          <div class="label">TANGENT-SECANT (external point)</div>
+          tangent² = external segment × whole secant
+        </div>
+        <div class="warn-box"><strong>⚠ Common Error:</strong> For secant problems from an external point — you multiply the whole secant by the external part (not the internal part). Keep this straight!</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Arc Length and Sector Area',diff:'basic',
+        problem:'A circle has radius 6 cm. A central angle of 120° is formed. Find the arc length and sector area.',
+        steps:[
+          {t:'<strong>Arc length formula:</strong>',math:'L = (θ/360°) × 2πr'},
+          {t:'<strong>Substitute:</strong>',math:'L = (120/360) × 2π(6) = (1/3) × 12π = 4π ≈ 12.57 cm'},
+          {t:'<strong>Sector area formula:</strong>',math:'A = (θ/360°) × πr²'},
+          {t:'<strong>Substitute:</strong>',math:'A = (120/360) × π(6²) = (1/3) × 36π = 12π ≈ 37.70 cm²'},
+        ],
+        answer:'Arc length = 4π ≈ 12.57 cm, Sector area = 12π ≈ 37.70 cm²'
+      },
+      {
+        title:'Inscribed Angle Theorem',diff:'inter',
+        problem:'An inscribed angle intercepts an arc of 84°. Find the inscribed angle.',
+        steps:[
+          {t:'<strong>Inscribed Angle Theorem:</strong> Inscribed angle = ½ × arc.',math:'∠ = ½ × 84°'},
+          {t:'<strong>Calculate:</strong>',math:'∠ = 42°'},
+        ],
+        answer:'Inscribed angle = 42°'
+      },
+      {
+        title:'Intersecting Chords Theorem',diff:'adv',
+        problem:'Two chords intersect inside a circle. One chord is divided into segments of 4 and 9. The other chord has one segment of 6. Find the other segment.',
+        steps:[
+          {t:'<strong>Intersecting Chords Theorem:</strong> Products of segments are equal.',math:'a × b = c × d'},
+          {t:'<strong>Substitute:</strong>',math:'4 × 9 = 6 × d'},
+          {t:'<strong>Solve:</strong>',math:'36 = 6d → d = 6'},
+        ],
+        answer:'The other segment = 6'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Central vs Inscribed Angles',body:'Central angle = arc (same number). Inscribed angle = ½ arc. So an inscribed angle is always HALF the central angle that cuts the same arc.'},
+      {num:'02',title:'Angle in a Semicircle',body:'ANY angle inscribed in a semicircle (where the arc is 180°) is a right angle. This is Thales\' theorem — inscribed angle = ½ × 180° = 90°.'},
+      {num:'03',title:'Tangent Perpendicularity',body:'A tangent line is ALWAYS perpendicular to the radius at the point of tangency. This creates a right angle — very useful in solving circle problems involving tangent lengths.'},
+      {num:'04',title:'Two Tangents From External Point',body:'If two tangent lines are drawn from the same external point to a circle, the two tangent segments are ALWAYS equal. This often simplifies algebraic problems.'},
+    ],
+    flashcards:[
+      {q:'What is the Inscribed Angle Theorem?',a:'An inscribed angle equals half its intercepted arc: ∠ = ½ × arc.'},
+      {q:'A central angle of 90° cuts what arc?',a:'A 90° arc (the arc measure equals the central angle measure).'},
+      {q:'What is Thales\' Theorem?',a:'An angle inscribed in a semicircle is always 90°.'},
+      {q:'Arc length formula?',a:'L = (θ/360°) × 2πr'},
+      {q:'Sector area formula?',a:'A = (θ/360°) × πr²'},
+      {q:'Two tangent segments from external point T to circle are PT and QT. What\'s true?',a:'PT = QT. Two tangents from the same external point are always equal.'},
+      {q:'Two chords intersect inside a circle: segments are 3, 8 and 4, x. Find x.',a:'x = 6. Using chord-chord: 3 × 8 = 4 × x → x = 24/4 = 6.'},
+      {q:'A tangent line and a radius meet at the point of tangency. What angle do they form?',a:'90° (a right angle). The tangent is always perpendicular to the radius at the point of tangency.'},
+    ],
+    quiz:[
+      {q:'Central angle = 80°. What is the intercepted arc?',opts:['40°','80°','160°','20°'],ans:1,exp:'The arc measure equals the central angle measure. Arc = 80°.'},
+      {q:'Inscribed angle = 35°. What is the intercepted arc?',opts:['35°','17.5°','70°','105°'],ans:2,exp:'Arc = 2 × inscribed angle = 2 × 35° = 70°.'},
+      {q:'A circle has radius 10 cm. Circumference?',opts:['10π','20π','100π','5π'],ans:1,exp:'C = 2πr = 2π(10) = 20π cm.'},
+      {q:'A 60° central angle in a circle with r = 12. Arc length?',opts:['2π','4π','6π','12π'],ans:1,exp:'L = (60/360) × 2π(12) = (1/6) × 24π = 4π.'},
+      {q:'Angle inscribed in a semicircle equals:',opts:['45°','90°','180°','60°'],ans:1,exp:'By Thales\' theorem, any angle inscribed in a semicircle = 90°.'},
+      {q:'A tangent and a secant from same external point. Tangent = 8, secant external part = 4. Whole secant = ?',opts:['16','12','20','8'],ans:0,exp:'Tangent² = external × whole → 64 = 4 × whole → whole = 16.'},
+      {q:'Two inscribed angles intercept the same arc. They are:',opts:['Supplementary','Complementary','Equal','Double each other'],ans:2,exp:'Both equal half the same arc, so they\'re equal to each other.'},
+      {q:'A sector has area 9π cm² and radius 6 cm. What is the central angle?',opts:['90°','45°','60°','30°'],ans:0,exp:'A = (θ/360) × πr² → 9π = (θ/360) × 36π → 9 = θ/10 → θ = 90°.'},
+      {q:'Chord AB and chord CD intersect at P. AP = 5, PB = 12, CP = 6. Find PD.',opts:['10','11','12','7'],ans:0,exp:'AP × PB = CP × PD → 5 × 12 = 6 × PD → PD = 60/6 = 10.'},
+      {q:'What is the relationship between a tangent and the radius at the point of tangency?',opts:['Parallel','Perpendicular','Equal','Bisecting'],ans:1,exp:'A tangent to a circle is always perpendicular to the radius drawn to the point of tangency.'},
+    ]
+  },
+  {
+    id:'area', icon:'📏', name:'Perimeter & Area (2D)',
+    tagline:'All the formulas — shapes, composites, and real applications',
+    learn:[
+      {icon:'📐',title:'Area of Common Shapes',body:`
+        <div class="formula-box">
+          <div class="label">STANDARD AREA FORMULAS</div>
+          Square: A = s²<br>
+          Rectangle: A = l × w<br>
+          Triangle: A = ½bh (b = base, h = perpendicular height)<br>
+          Parallelogram: A = bh<br>
+          Trapezoid: A = ½(b₁ + b₂)h<br>
+          Rhombus/Kite: A = ½d₁d₂ (d = diagonal lengths)<br>
+          Circle: A = πr²<br>
+          Regular polygon: A = ½ × apothem × perimeter
+        </div>
+        <div class="warn-box"><strong>⚠ Height vs. Side:</strong> For triangles and parallelograms, the height (h) is the PERPENDICULAR distance to the base — not the slant side! Always identify the perpendicular height.</div>
+      `},
+      {icon:'📏',title:'Perimeter of Common Shapes',body:`
+        <div class="formula-box">
+          <div class="label">PERIMETER FORMULAS</div>
+          Square: P = 4s<br>
+          Rectangle: P = 2(l + w)<br>
+          Triangle: P = a + b + c<br>
+          Parallelogram: P = 2(a + b)<br>
+          Circle (Circumference): C = 2πr<br>
+          Regular polygon: P = n × s
+        </div>
+        <div class="def-box"><span class="term">Apothem</span><div class="definition">The distance from the center of a regular polygon to the midpoint of a side. Used in area calculations.</div></div>
+        <div class="tip-box"><strong>💡 Tip:</strong> For composite figures, add perimeters but DON'T count interior edges! Only trace the outer boundary.</div>
+      `},
+      {icon:'🔶',title:'Composite Figures',body:`
+        <div class="def-box"><span class="term">Composite Figure</span><div class="definition">A shape made up of two or more basic shapes combined. To find area: add areas of parts OR subtract unwanted area from a larger shape.</div></div>
+        <div class="section-label">Strategy</div>
+        <div class="note-box"><strong>1.</strong> Identify the basic shapes.<br><strong>2.</strong> Find missing dimensions using the overall figure.<br><strong>3.</strong> Calculate each area separately.<br><strong>4.</strong> Add or subtract as needed.</div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> Composite area calculations are used constantly in architecture (floor plans), landscaping, and civil engineering (cross-sections of roads and beams).</div>
+      `},
+      {icon:'🌐',title:'Heron\'s Formula & Shoelace Formula',body:`
+        <div class="formula-box">
+          <div class="label">HERON'S FORMULA (triangle — no height needed!)</div>
+          s = (a + b + c) / 2  [semi-perimeter]<br>
+          A = √(s(s−a)(s−b)(s−c))
+        </div>
+        <div class="formula-box">
+          <div class="label">SHOELACE FORMULA (polygon with coordinates)</div>
+          A = ½ |Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)|<br>
+          List vertices in order, cross-multiply diagonally
+        </div>
+        <div class="tip-box"><strong>💡 Heron's Tip:</strong> Use Heron's formula when you're given three sides but no height. Find s first (semi-perimeter), then plug into the formula — don't skip that step.</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Area of a Trapezoid',diff:'basic',
+        problem:'A trapezoid has parallel bases 8 cm and 14 cm, and a height of 6 cm. Find the area.',
+        steps:[
+          {t:'<strong>Trapezoid area formula:</strong>',math:'A = ½(b₁ + b₂)h'},
+          {t:'<strong>Substitute:</strong>',math:'A = ½(8 + 14)(6) = ½(22)(6) = ½ × 132'},
+          {t:'<strong>Calculate:</strong>',math:'A = 66 cm²'},
+        ],
+        answer:'Area = 66 cm²'
+      },
+      {
+        title:'Heron\'s Formula',diff:'inter',
+        problem:'A triangle has sides 7, 8, and 9. Find its area using Heron\'s formula.',
+        steps:[
+          {t:'<strong>Find the semi-perimeter:</strong>',math:'s = (7+8+9)/2 = 24/2 = 12'},
+          {t:'<strong>Apply Heron\'s formula:</strong>',math:'A = √(s(s−a)(s−b)(s−c))'},
+          {t:'<strong>Substitute:</strong>',math:'A = √(12(12−7)(12−8)(12−9)) = √(12×5×4×3)'},
+          {t:'<strong>Calculate:</strong>',math:'A = √720 = √(144×5) = 12√5 ≈ 26.83 cm²'},
+        ],
+        answer:'A = 12√5 ≈ 26.83 cm²'
+      },
+      {
+        title:'Composite Figure Area',diff:'adv',
+        problem:'A figure is a 10×8 rectangle with a semicircle on top (diameter = 10). Find the total area.',
+        steps:[
+          {t:'<strong>Rectangle area:</strong>',math:'A₁ = 10 × 8 = 80 cm²'},
+          {t:'<strong>Semicircle:</strong> Diameter = 10, so radius = 5.',math:'A₂ = ½πr² = ½π(5²) = 12.5π ≈ 39.27 cm²'},
+          {t:'<strong>Total area:</strong>',math:'A = 80 + 12.5π ≈ 80 + 39.27 ≈ 119.27 cm²'},
+        ],
+        answer:'Total area ≈ 119.27 cm²'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Height is Always Perpendicular',body:'For any area formula involving h: h must be perpendicular to the base. The slant side is NOT the height unless the shape is a right figure.'},
+      {num:'02',title:'Kite/Rhombus Diagonal Formula',body:'Area = ½d₁d₂. This works because diagonals of a rhombus/kite are perpendicular bisectors — they form 4 right triangles.'},
+      {num:'03',title:'Composite Area Shortcut',body:'Sometimes it\'s faster to find a LARGE shape\'s area and subtract holes. E.g., a donut shape = area of big circle − area of small circle.'},
+      {num:'04',title:'Units of Area',body:'Area is always in square units (cm², m², ft², etc.). Perimeter is in linear units (cm, m, ft). Never mix them up on answers!'},
+    ],
+    flashcards:[
+      {q:'Area of a triangle with base 12 and height 7?',a:'A = ½bh = ½(12)(7) = 42 square units.'},
+      {q:'Area formula for a trapezoid?',a:'A = ½(b₁ + b₂)h, where b₁ and b₂ are the parallel bases and h is the perpendicular height.'},
+      {q:'What is Heron\'s formula used for?',a:'Finding the area of a triangle when all three sides are known but no height is given. Uses the semi-perimeter s = (a+b+c)/2.'},
+      {q:'Area of a rhombus with diagonals 10 and 8?',a:'A = ½d₁d₂ = ½(10)(8) = 40 square units.'},
+      {q:'Area of a circle with diameter 14?',a:'r = 7, A = πr² = 49π ≈ 153.94 sq units.'},
+      {q:'A regular hexagon has side 6 and apothem 3√3. Area?',a:'A = ½ × apothem × perimeter = ½ × 3√3 × 36 = 54√3 ≈ 93.53 sq units.'},
+      {q:'What is the difference between area and perimeter?',a:'Perimeter = total length of the boundary (linear units). Area = amount of surface enclosed (square units).'},
+      {q:'A square has area 81 cm². What is its perimeter?',a:'Side = √81 = 9 cm. Perimeter = 4s = 36 cm.'},
+    ],
+    quiz:[
+      {q:'A rectangle is 15 m long and 8 m wide. What is its area?',opts:['23 m²','46 m²','120 m²','60 m²'],ans:2,exp:'A = l × w = 15 × 8 = 120 m².'},
+      {q:'A triangle has base 10 cm and height 6 cm. Area?',opts:['60 cm²','30 cm²','20 cm²','15 cm²'],ans:1,exp:'A = ½bh = ½(10)(6) = 30 cm².'},
+      {q:'A circle has area 16π. What is the radius?',opts:['16','4','8','2'],ans:1,exp:'πr² = 16π → r² = 16 → r = 4.'},
+      {q:'A parallelogram has base 12 and height 5. Area?',opts:['17','60','34','30'],ans:1,exp:'A = bh = 12 × 5 = 60.'},
+      {q:'A trapezoid has bases 5 and 9 and height 4. Area?',opts:['28','56','14','18'],ans:0,exp:'A = ½(5+9)(4) = ½(14)(4) = 28.'},
+      {q:'A rhombus has diagonals of 12 and 16. Area?',opts:['96','192','48','48√2'],ans:0,exp:'A = ½d₁d₂ = ½(12)(16) = 96.'},
+      {q:'Triangle with sides 5, 12, 13 (right triangle). Area?',opts:['60','30','78','65'],ans:1,exp:'Right triangle: legs are 5 and 12. A = ½(5)(12) = 30.'},
+      {q:'A figure consists of a 6×6 square with a triangular hole (b=6, h=3) cut out. Remaining area?',opts:['27','36','27','45'],ans:0,exp:'Square area = 36. Triangle = ½(6)(3) = 9. Remaining = 36 − 9 = 27.'},
+      {q:'A circle has circumference 10π. What is its area?',opts:['10π','25π','100π','5π'],ans:1,exp:'C = 2πr = 10π → r = 5. A = πr² = 25π.'},
+      {q:'Heron\'s formula: Triangle with sides 3, 4, 5. Area?',opts:['6','7.5','5','4'],ans:0,exp:'s = 6, A = √(6×3×2×1) = √36 = 6. (Also a right triangle: ½×3×4 = 6).'},
+    ]
+  },
+  {
+    id:'solid', icon:'📦', name:'Surface Area & Volume',
+    tagline:'3D figures — prisms, cylinders, pyramids, cones, spheres',
+    learn:[
+      {icon:'🔷',title:'Prisms',body:`
+        <div class="def-box"><span class="term">Prism</span><div class="definition">A 3D figure with two congruent, parallel polygonal bases connected by rectangular lateral faces.</div></div>
+        <div class="formula-box">
+          <div class="label">RECTANGULAR PRISM (Cuboid)</div>
+          Volume: V = l × w × h<br>
+          Surface Area: SA = 2(lw + lh + wh)<br><br>
+          <div class="label">GENERAL PRISM</div>
+          Volume: V = B × h  (B = base area, h = height)<br>
+          Surface Area: SA = 2B + Ph  (P = base perimeter)
+        </div>
+        <div class="def-box"><span class="term">Cube</span><div class="definition">All 6 faces are equal squares. V = s³, SA = 6s².</div></div>
+      `},
+      {icon:'⭕',title:'Cylinders, Cones & Spheres',body:`
+        <div class="formula-box">
+          <div class="label">CYLINDER (r = radius, h = height)</div>
+          Volume: V = πr²h<br>
+          Surface Area: SA = 2πr² + 2πrh = 2πr(r + h)<br><br>
+          <div class="label">CONE (r = radius, h = height, l = slant height)</div>
+          Volume: V = ⅓πr²h<br>
+          Surface Area: SA = πr² + πrl = πr(r + l)<br>
+          Slant height: l = √(r² + h²)<br><br>
+          <div class="label">SPHERE (r = radius)</div>
+          Volume: V = (4/3)πr³<br>
+          Surface Area: SA = 4πr²
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Cone volume = ⅓ × cylinder volume (same radius and height). Pyramid volume = ⅓ × prism volume. The ⅓ factor appears for all "pointed" 3D shapes!</div>
+      `},
+      {icon:'🔺',title:'Pyramids',body:`
+        <div class="def-box"><span class="term">Pyramid</span><div class="definition">A 3D figure with a polygonal base and triangular faces meeting at an apex.</div></div>
+        <div class="formula-box">
+          <div class="label">PYRAMID FORMULAS</div>
+          Volume: V = ⅓ × B × h  (B = base area, h = perpendicular height)<br>
+          Lateral Surface Area: LA = ½ × Perimeter × slant height (l)<br>
+          Total SA = LA + Base Area
+        </div>
+        <div class="formula-box">
+          <div class="label">SQUARE PYRAMID (base side = a, slant height = l)</div>
+          V = ⅓a²h<br>
+          LA = 2al<br>
+          SA = 2al + a²
+        </div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> The volume formula V = ⅓Bh was used by ancient Egyptians. Modern applications include calculating concrete volumes for pointed structures and grain silo capacities.</div>
+      `},
+      {icon:'📐',title:'Cavalieri\'s Principle & Cross-Sections',body:`
+        <div class="def-box"><span class="term">Cavalieri's Principle</span><div class="definition">If two solids have the same height and equal cross-sectional areas at every level, they have the same volume.</div></div>
+        <div class="def-box"><span class="term">Cross-section</span><div class="definition">The 2D shape formed when a plane cuts through a 3D solid. The shape depends on the angle and position of the cut.</div></div>
+        <div class="formula-box">
+          <div class="label">CROSS-SECTIONS OF COMMON SOLIDS</div>
+          Sphere: always a circle<br>
+          Cylinder (horizontal cut): circle<br>
+          Cone (parallel to base): circle; (through apex): triangle<br>
+          Cube (diagonal cut): rectangle or hexagon
+        </div>
+        <div class="note-box"><strong>📝 Note:</strong> Euler's formula for polyhedra: V − E + F = 2, where V = vertices, E = edges, F = faces. Verified for any convex polyhedron!</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Volume and SA of a Cylinder',diff:'basic',
+        problem:'A cylinder has radius 4 cm and height 10 cm. Find its volume and surface area.',
+        steps:[
+          {t:'<strong>Volume formula:</strong>',math:'V = πr²h'},
+          {t:'<strong>Substitute:</strong>',math:'V = π(4²)(10) = 160π ≈ 502.65 cm³'},
+          {t:'<strong>Surface area formula:</strong>',math:'SA = 2πr² + 2πrh = 2πr(r + h)'},
+          {t:'<strong>Substitute:</strong>',math:'SA = 2π(4)(4 + 10) = 8π(14) = 112π ≈ 351.86 cm²'},
+        ],
+        answer:'V = 160π cm³, SA = 112π cm²'
+      },
+      {
+        title:'Pyramid Volume',diff:'inter',
+        problem:'A square pyramid has base side 9 m and height 12 m. Find the volume.',
+        steps:[
+          {t:'<strong>Pyramid volume:</strong>',math:'V = ⅓ × B × h'},
+          {t:'<strong>Base area of square:</strong>',math:'B = 9² = 81 m²'},
+          {t:'<strong>Calculate:</strong>',math:'V = ⅓ × 81 × 12 = ⅓ × 972 = 324 m³'},
+        ],
+        answer:'V = 324 m³'
+      },
+      {
+        title:'Composite Solid Volume',diff:'adv',
+        problem:'A silo consists of a cylinder (r = 5 m, h = 20 m) topped with a cone (same r, h = 8 m). Find the total volume.',
+        steps:[
+          {t:'<strong>Cylinder volume:</strong>',math:'V₁ = πr²h = π(25)(20) = 500π'},
+          {t:'<strong>Cone volume:</strong>',math:'V₂ = ⅓πr²h = ⅓π(25)(8) = 200π/3'},
+          {t:'<strong>Total:</strong>',math:'V = 500π + 200π/3 = (1500π + 200π)/3 = 1700π/3 ≈ 1780.2 m³'},
+        ],
+        answer:'Total Volume = 1700π/3 ≈ 1780.2 m³'
+      }
+    ],
+    tips:[
+      {num:'01',title:'The ⅓ Rule',body:'Every "pointed" 3D shape (cone, pyramid) has volume = ⅓ × (same shape without the point). Cone = ⅓ cylinder. Pyramid = ⅓ prism.'},
+      {num:'02',title:'Slant Height vs. Height',body:'For cones and pyramids, h = perpendicular height (straight down from apex to base), while l = slant height (along the face). Use Pythagorean theorem: l = √(r² + h²).'},
+      {num:'03',title:'Sphere Formulas — Easy Memory',body:'SA = 4πr² (four circles of area πr²). Volume = (4/3)πr³. Notice: 4, 4/3 — both start with 4. SA uses r², Volume uses r³.'},
+      {num:'04',title:'SA vs Volume Units',body:'Volume is always in cubic units (cm³, m³). Surface area is in square units (cm², m²). Mislabeling costs marks every time!'},
+    ],
+    flashcards:[
+      {q:'Volume of a sphere with r = 3?',a:'V = (4/3)πr³ = (4/3)π(27) = 36π ≈ 113.1 cubic units.'},
+      {q:'Surface area formula for a cylinder?',a:'SA = 2πr² + 2πrh = 2πr(r + h). Two circular ends + lateral rectangle.'},
+      {q:'A cube has side 5. Volume?',a:'V = s³ = 5³ = 125 cubic units.'},
+      {q:'What is the relationship between cone and cylinder volumes (same r and h)?',a:'V(cone) = ⅓ V(cylinder). The cone holds exactly one-third as much.'},
+      {q:'Pyramid with base area 36 and height 9. Volume?',a:'V = ⅓ × 36 × 9 = 108 cubic units.'},
+      {q:'How do you find the slant height of a cone?',a:'Using Pythagorean theorem: l = √(r² + h²), where r = radius and h = perpendicular height.'},
+      {q:'Surface area of a sphere with r = 6?',a:'SA = 4πr² = 4π(36) = 144π ≈ 452.4 sq units.'},
+      {q:'Euler\'s formula for polyhedra?',a:'V − E + F = 2 (Vertices − Edges + Faces = 2). Holds for any convex polyhedron.'},
+    ],
+    quiz:[
+      {q:'Volume of a rectangular prism: l=6, w=4, h=5?',opts:['60','120','80','150'],ans:1,exp:'V = l × w × h = 6 × 4 × 5 = 120.'},
+      {q:'Surface area of a cube with side 4?',opts:['24','64','96','48'],ans:2,exp:'SA = 6s² = 6(16) = 96.'},
+      {q:'Cylinder r=3, h=7. Volume?',opts:['21π','63π','42π','9π'],ans:1,exp:'V = πr²h = π(9)(7) = 63π.'},
+      {q:'Cone r=6, h=8. Volume?',opts:['96π','288π','48π','144π'],ans:0,exp:'V = ⅓πr²h = ⅓π(36)(8) = 96π.'},
+      {q:'Sphere r=3. Surface area?',opts:['12π','36π','72π','9π'],ans:1,exp:'SA = 4πr² = 4π(9) = 36π.'},
+      {q:'A pyramid has a rectangular base 6×8 and height 10. Volume?',opts:['480','160','320','240'],ans:1,exp:'B = 6×8 = 48, V = ⅓(48)(10) = 160.'},
+      {q:'A cylinder and a cone have the same radius and height. Ratio of their volumes (cylinder:cone)?',opts:['2:1','3:1','1:3','1:2'],ans:1,exp:'Vcone = ⅓ Vcylinder, so ratio is 3:1.'},
+      {q:'A sphere has volume 36π. What is the radius?',opts:['2','3','4','6'],ans:1,exp:'(4/3)πr³ = 36π → r³ = 27 → r = 3.'},
+      {q:'Slant height of a cone with r=5 and h=12?',opts:['13','10','17','15'],ans:0,exp:'l = √(r² + h²) = √(25 + 144) = √169 = 13.'},
+      {q:'Total surface area of a closed cylinder r=5, h=10?',opts:['100π','50π','150π','75π'],ans:2,exp:'SA = 2πr(r+h) = 2π(5)(15) = 150π.'},
+    ]
+  },
+  {
+    id:'coordinate', icon:'📍', name:'Coordinate Geometry',
+    tagline:'Points on a plane — distance, midpoint, slope, equations',
+    learn:[
+      {icon:'📍',title:'The Coordinate Plane',body:`
+        <div class="def-box"><span class="term">Coordinate Plane</span><div class="definition">Two perpendicular number lines (x-axis horizontal, y-axis vertical) dividing the plane into 4 quadrants.</div></div>
+        <div class="formula-box">
+          <div class="label">KEY FORMULAS</div>
+          Distance: d = √((x₂−x₁)² + (y₂−y₁)²)<br>
+          Midpoint: M = ((x₁+x₂)/2, (y₁+y₂)/2)<br>
+          Slope: m = (y₂−y₁)/(x₂−x₁) = rise/run
+        </div>
+        <div class="formula-box">
+          <div class="label">LINE EQUATIONS</div>
+          Slope-intercept: y = mx + b<br>
+          Point-slope: y − y₁ = m(x − x₁)<br>
+          Standard form: Ax + By = C
+        </div>
+      `},
+      {icon:'⊥',title:'Parallel & Perpendicular Lines (Coordinate)',body:`
+        <div class="formula-box">
+          <div class="label">SLOPE RELATIONSHIPS</div>
+          Parallel lines: equal slopes (m₁ = m₂)<br>
+          Perpendicular lines: slopes are negative reciprocals<br>
+          m₁ × m₂ = −1, or m₂ = −1/m₁<br><br>
+          Horizontal line: m = 0 (equation: y = k)<br>
+          Vertical line: undefined slope (equation: x = k)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> To find a perpendicular slope: flip the fraction and change the sign. Slope of 3/4 → perpendicular is −4/3.</div>
+      `},
+      {icon:'⭕',title:'Circle Equations',body:`
+        <div class="formula-box">
+          <div class="label">EQUATION OF A CIRCLE</div>
+          Center (h, k), radius r:<br>
+          (x − h)² + (y − k)² = r²<br><br>
+          Center at origin: x² + y² = r²
+        </div>
+        <div class="def-box"><span class="term">General Form to Standard Form</span><div class="definition">Complete the square for both x and y terms to convert x² + y² + Dx + Ey + F = 0 to standard form.</div></div>
+        <div class="tip-box"><strong>💡 Tip:</strong> In (x − h)² + (y − k)² = r², notice the MINUS signs in the formula. Center (3, −5) gives (x − 3)² + (y + 5)² = r². Don't flip the signs!</div>
+      `},
+      {icon:'📐',title:'Proofs Using Coordinates',body:`
+        <div class="note-box"><strong>Strategy:</strong> Assign coordinates to vertices, then use formulas to prove properties.</div>
+        <div class="formula-box">
+          <div class="label">COMMON COORDINATE PROOFS</div>
+          Prove parallelogram: show both pairs of opposite slopes equal<br>
+          Prove rectangle: show all slopes meet at right angles<br>
+          Prove isosceles: show two sides have equal distance<br>
+          Prove bisection: show midpoints of diagonals are equal<br>
+          Prove collinear: show equal slopes between 3 points
+        </div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> GPS coordinates are essentially coordinate geometry in a curved space (latitude/longitude). Distance formulas underlie navigation systems.</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Distance and Midpoint',diff:'basic',
+        problem:'A = (1, 3) and B = (7, 11). Find AB and the midpoint M.',
+        steps:[
+          {t:'<strong>Distance formula:</strong>',math:'d = √((7−1)² + (11−3)²)'},
+          {t:'<strong>Simplify:</strong>',math:'d = √(36 + 64) = √100 = 10'},
+          {t:'<strong>Midpoint formula:</strong>',math:'M = ((1+7)/2, (3+11)/2) = (4, 7)'},
+        ],
+        answer:'AB = 10, Midpoint M = (4, 7)'
+      },
+      {
+        title:'Equation of a Line — Perpendicular',diff:'inter',
+        problem:'A line passes through (2, 5) and is perpendicular to y = 3x − 1. Write its equation.',
+        steps:[
+          {t:'<strong>Slope of given line:</strong> m = 3',math:''},
+          {t:'<strong>Perpendicular slope:</strong> flip and negate.',math:'m⊥ = −1/3'},
+          {t:'<strong>Point-slope form:</strong>',math:'y − 5 = −(1/3)(x − 2)'},
+          {t:'<strong>Simplify:</strong>',math:'y = −x/3 + 2/3 + 5 = −x/3 + 17/3'},
+        ],
+        answer:'y = −(1/3)x + 17/3 or 3y = −x + 17'
+      },
+      {
+        title:'Circle Equation — Find Center and Radius',diff:'adv',
+        problem:'Find the center and radius of: x² + y² − 6x + 8y − 11 = 0.',
+        steps:[
+          {t:'<strong>Group x and y terms:</strong>',math:'(x²−6x) + (y²+8y) = 11'},
+          {t:'<strong>Complete the square for x:</strong> half of −6 = −3, (−3)² = 9',math:'(x²−6x+9) + ... = 11 + 9'},
+          {t:'<strong>Complete the square for y:</strong> half of 8 = 4, 4² = 16',math:'(x²−6x+9) + (y²+8y+16) = 11 + 9 + 16 = 36'},
+          {t:'<strong>Factor:</strong>',math:'(x−3)² + (y+4)² = 36'},
+          {t:'<strong>Read off:</strong> Center = (3, −4), radius = √36 = 6',math:''},
+        ],
+        answer:'Center (3, −4), radius = 6'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Slope Formula Order',body:'In slope m = (y₂−y₁)/(x₂−x₁), be consistent: use the SAME point as "point 2" in both numerator and denominator. Mixing them gives the wrong sign.'},
+      {num:'02',title:'Perpendicular Slope Fast',body:'To get the perpendicular slope: flip and change sign. m = 2/3 → perpendicular: −3/2. Works every time, takes 2 seconds.'},
+      {num:'03',title:'Circle Equation — Watch Signs',body:'(x − h)² + (y − k)² = r² Center is (h, k) with opposite signs. (x − 3)² + (y + 4)² = 25 → Center is (3, −4), not (−3, 4).'},
+      {num:'04',title:'Collinearity Check',body:'Three points are collinear if the slope between any two pairs is the same. Check slope of AB and slope of BC. If equal → collinear.'},
+    ],
+    flashcards:[
+      {q:'Distance formula between points (x₁,y₁) and (x₂,y₂)?',a:'d = √((x₂−x₁)² + (y₂−y₁)²)'},
+      {q:'Midpoint formula?',a:'M = ((x₁+x₂)/2, (y₁+y₂)/2)'},
+      {q:'Slope formula?',a:'m = (y₂−y₁)/(x₂−x₁) = rise/run'},
+      {q:'Equation of circle with center (2, −3) and radius 5?',a:'(x−2)² + (y+3)² = 25'},
+      {q:'What slope is perpendicular to m = 4?',a:'m = −1/4. Perpendicular slopes are negative reciprocals: m₁ × m₂ = −1.'},
+      {q:'A line has slope 0. What does this mean?',a:'The line is horizontal (y = constant). Example: y = 5.'},
+      {q:'What is the slope of a vertical line?',a:'Undefined. You cannot divide by zero (x₂ − x₁ = 0 in slope formula).'},
+      {q:'What does it mean if two lines have the same slope but different y-intercepts?',a:'The lines are parallel — they never intersect.'},
+    ],
+    quiz:[
+      {q:'Distance between (0,0) and (3,4)?',opts:['5','7','√7','6'],ans:0,exp:'d = √(9+16) = √25 = 5.'},
+      {q:'Midpoint of (−2, 6) and (8, −4)?',opts:['(3,1)','(6,2)','(5,−1)','(3,−1)'],ans:0,exp:'M = ((−2+8)/2, (6−4)/2) = (3, 1).'},
+      {q:'Slope of line through (1,2) and (5,10)?',opts:['1','2','3','4'],ans:1,exp:'m = (10−2)/(5−1) = 8/4 = 2.'},
+      {q:'Which line is perpendicular to y = 2x + 3?',opts:['y = 2x−1','y = −2x+1','y = −½x+4','y = ½x−2'],ans:2,exp:'Perpendicular slope = −½ (negative reciprocal of 2). y = −½x + 4.'},
+      {q:'Center and radius of (x−2)² + (y+5)² = 49?',opts:['(2,5), r=7','(−2,5), r=7','(2,−5), r=7','(2,−5), r=49'],ans:2,exp:'Center (h,k) = (2,−5), radius = √49 = 7.'},
+      {q:'Are (1,1), (3,3), (5,5) collinear?',opts:['No','Yes','Cannot tell','Only if parallel'],ans:1,exp:'Slope (1,1)→(3,3) = 1. Slope (3,3)→(5,5) = 1. Equal slopes + shared point → collinear.'},
+      {q:'Line passes through (0,4) with slope 3. Equation?',opts:['y = 3x','y = 3x+4','y = 4x+3','y = 3x−4'],ans:1,exp:'y = mx + b = 3x + 4 (b = 4 from y-intercept).'},
+      {q:'Distance between (−1, 4) and (3, 1)?',opts:['5','7','√7','3'],ans:0,exp:'d = √((3−(−1))² + (1−4)²) = √(16+9) = √25 = 5.'},
+      {q:'Slope of a horizontal line is:',opts:['1','−1','0','Undefined'],ans:2,exp:'Horizontal lines have slope = 0. They don\'t rise at all.'},
+      {q:'Which pair of points gives a slope of −3?',opts:['(1,1),(2,4)','(0,6),(2,0)','(1,3),(2,0)','(0,0),(3,9)'],ans:1,exp:'m = (0−6)/(2−0) = −6/2 = −3.'},
+    ]
+  },
+  {
+    id:'transformations', icon:'🔄', name:'Transformations',
+    tagline:'Translation, reflection, rotation, dilation & symmetry',
+    learn:[
+      {icon:'➡',title:'Translation',body:`
+        <div class="def-box"><span class="term">Translation</span><div class="definition">Slides a figure a fixed distance in a given direction. Every point moves the same amount. Denoted T(a,b) where a = horizontal shift and b = vertical shift.</div></div>
+        <div class="formula-box">
+          <div class="label">TRANSLATION RULE</div>
+          (x, y) → (x + a, y + b)<br>
+          T(3, −2): move 3 right, 2 down<br>
+          New point: (x+3, y−2)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Translation preserves size, shape, and orientation. It's an isometry (preserves distances and angles). The figure just "slides."</div>
+      `},
+      {icon:'🪞',title:'Reflection',body:`
+        <div class="formula-box">
+          <div class="label">REFLECTION RULES</div>
+          Over x-axis: (x, y) → (x, −y)<br>
+          Over y-axis: (x, y) → (−x, y)<br>
+          Over y = x: (x, y) → (y, x)<br>
+          Over y = −x: (x, y) → (−y, −x)<br>
+          Over x = a: (x, y) → (2a−x, y)<br>
+          Over y = b: (x, y) → (x, 2b−y)
+        </div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Reflection is an isometry — preserves size and shape. BUT it reverses orientation (a clockwise figure becomes counterclockwise). This is called an opposite isometry.</div>
+      `},
+      {icon:'↻',title:'Rotation',body:`
+        <div class="formula-box">
+          <div class="label">ROTATION RULES (center = origin)</div>
+          90° CCW: (x, y) → (−y, x)<br>
+          180°: (x, y) → (−x, −y)<br>
+          270° CCW (= 90° CW): (x, y) → (y, −x)<br>
+          360°: (x, y) → (x, y) [no change]
+        </div>
+        <div class="tip-box"><strong>💡 Memory Trick:</strong> For 90° CCW: swap x and y, then negate the new x (which was y). <br>(3, 5) → (−5, 3).</div>
+        <div class="note-box"><strong>📝 Note:</strong> Rotation is a direct isometry — preserves orientation, size, and shape.</div>
+      `},
+      {icon:'🔍',title:'Dilation & Scale Factor',body:`
+        <div class="def-box"><span class="term">Dilation</span><div class="definition">Enlarges or reduces a figure by a scale factor k, relative to a center of dilation.</div></div>
+        <div class="formula-box">
+          <div class="label">DILATION RULE (center = origin)</div>
+          D_k: (x, y) → (kx, ky)<br>
+          k > 1: enlargement<br>
+          0 < k < 1: reduction<br>
+          k < 0: dilation + 180° rotation (through center)
+        </div>
+        <div class="warn-box"><strong>⚠ Dilation is NOT an isometry</strong> — it does NOT preserve distances (unless k = 1 or k = −1). It DOES preserve angles and shape. Dilation produces similar, not congruent, figures.</div>
+        <div class="def-box"><span class="term">Symmetry Types</span><div class="definition"><strong>Line symmetry:</strong> figure maps onto itself by reflection.<br><strong>Rotational symmetry:</strong> figure maps onto itself by rotation less than 360°.<br><strong>Point symmetry:</strong> figure maps onto itself by 180° rotation.</div></div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Applying a Translation',diff:'basic',
+        problem:'Triangle with vertices A(1,2), B(4,2), C(3,5). Apply T(−3, 2).',
+        steps:[
+          {t:'<strong>Translation rule:</strong> (x,y) → (x−3, y+2)',math:''},
+          {t:'<strong>Translate A:</strong>',math:"A(1,2) → A'(1−3, 2+2) = A'(−2, 4)"},
+          {t:'<strong>Translate B:</strong>',math:"B(4,2) → B'(1, 4)"},
+          {t:'<strong>Translate C:</strong>',math:"C(3,5) → C'(0, 7)"},
+        ],
+        answer:"A'(−2,4), B'(1,4), C'(0,7)"
+      },
+      {
+        title:'Composition of Reflections',diff:'inter',
+        problem:"Point P(3, 5). Reflect over x-axis, then reflect over y-axis. Find the final image P''.",
+        steps:[
+          {t:'<strong>Step 1 — Reflect over x-axis:</strong> (x,y) → (x, −y)',math:"P(3,5) → P'(3, −5)"},
+          {t:"<strong>Step 2 — Reflect P' over y-axis:</strong> (x,y) → (−x, y)",math:"P'(3,−5) → P''(−3, −5)"},
+          {t:"<strong>Note:</strong> Reflecting over x-axis then y-axis = 180° rotation!",math:'(x,y) → (−x, −y) confirms this'},
+        ],
+        answer:"P'' = (−3, −5)"
+      },
+      {
+        title:'Dilation with Non-Origin Center',diff:'adv',
+        problem:'Point A(5, 3), center of dilation C(1, 1), scale factor k = 2. Find the image A\'.',
+        steps:[
+          {t:'<strong>Strategy:</strong> Translate so C is at origin, dilate, translate back.',math:''},
+          {t:'<strong>Shift A by subtracting C:</strong>',math:'A − C = (5−1, 3−1) = (4, 2)'},
+          {t:'<strong>Dilate by k = 2:</strong>',math:'(4×2, 2×2) = (8, 4)'},
+          {t:'<strong>Shift back (add C):</strong>',math:"A' = (8+1, 4+1) = (9, 5)"},
+        ],
+        answer:"A' = (9, 5)"
+      }
+    ],
+    tips:[
+      {num:'01',title:'Isometry Checklist',body:'Translation, Reflection, Rotation = isometries (preserve size and shape, produce congruent figures). Dilation = similarity transformation (preserves shape, changes size). Know which is which!'},
+      {num:'02',title:'90° Rotation — Easy Way',body:'For 90° CCW from origin: SWAP x and y, then NEGATE the first one. (a,b) → (−b, a). For 90° CW: swap and negate the second: (a,b) → (b, −a).'},
+      {num:'03',title:'Reflection Over y = x',body:'Reflecting over y = x swaps the coordinates: (a,b) → (b,a). This is the inverse function reflection! Useful in function-related geometry.'},
+      {num:'04',title:'Composition = Rotation',body:'Two reflections over parallel lines = translation. Two reflections over intersecting lines = rotation. The angle of rotation = 2 × angle between the mirror lines.'},
+    ],
+    flashcards:[
+      {q:'What is the image of (4, −3) reflected over the x-axis?',a:'(4, 3). Reflecting over x-axis: (x, y) → (x, −y). So (4, −3) → (4, 3).'},
+      {q:'What is the image of (2, 5) after a 90° CCW rotation about the origin?',a:'(−5, 2). Rule: (x,y) → (−y, x). So (2,5) → (−5, 2).'},
+      {q:'Translation T(−4, 3) applied to (7, −1). Result?',a:'(3, 2). (7+(−4), −1+3) = (3, 2).'},
+      {q:'Dilation by factor 3 from origin: (2, 5) → ?',a:'(6, 15). Multiply both coordinates by 3.'},
+      {q:'What is the image of (3, 7) reflected over the y-axis?',a:'(−3, 7). Reflecting over y-axis: (x, y) → (−x, y).'},
+      {q:'What type of isometry reverses orientation?',a:'Reflection. It\'s an opposite isometry — the figure is a mirror image.'},
+      {q:'(5, 2) after a 180° rotation about the origin?',a:'(−5, −2). Rule for 180°: (x, y) → (−x, −y).'},
+      {q:'What is the scale factor if a figure doubles in size?',a:'k = 2. Dilation with k = 2 doubles all distances from the center.'},
+    ],
+    quiz:[
+      {q:'T(5, −2) applied to (−3, 4). Image?',opts:['(2,2)','(−8,6)','(−3,4)','(2,−2)'],ans:0,exp:'(−3+5, 4+(−2)) = (2, 2).'},
+      {q:'(4, −6) reflected over x-axis?',opts:['(−4,6)','(4,6)','(−4,−6)','(6,−4)'],ans:1,exp:'Over x-axis: (x,y) → (x,−y). (4,−6) → (4,6).'},
+      {q:'(−3, 5) reflected over y-axis?',opts:['(3,5)','(−3,−5)','(5,−3)','(3,−5)'],ans:0,exp:'Over y-axis: (x,y) → (−x,y). (−3,5) → (3,5).'},
+      {q:'(2,7) rotated 90° CCW about origin?',opts:['(−7,2)','(7,−2)','(2,−7)','(−2,7)'],ans:0,exp:'90° CCW: (x,y) → (−y,x). (2,7) → (−7,2).'},
+      {q:'(3, 4) rotated 180° about origin?',opts:['(4,3)','(−3,4)','(−3,−4)','(3,−4)'],ans:2,exp:'180° rotation: (x,y) → (−x,−y). (3,4) → (−3,−4).'},
+      {q:'Dilation by k=½ from origin: (8, 6) → ?',opts:['(4,3)','(16,12)','(3,4)','(6,4)'],ans:0,exp:'(8×½, 6×½) = (4, 3).'},
+      {q:'Reflecting over y = x: (3, 7) → ?',opts:['(3,7)','(7,3)','(−7,3)','(−3,−7)'],ans:1,exp:'Over y=x: (x,y) → (y,x). (3,7) → (7,3).'},
+      {q:'Which transformation is NOT an isometry?',opts:['Translation','Rotation','Reflection','Dilation'],ans:3,exp:'Dilation changes the size of the figure (unless k=1), so it is not an isometry.'},
+      {q:'A figure has rotational symmetry of order 4. It maps onto itself at what angles?',opts:['90°, 180°, 270°, 360°','45°, 90°, 135°','120°, 240°, 360°','60°, 120°, 180°'],ans:0,exp:'Order 4 means 360°/4 = 90°. Maps onto itself at 90°, 180°, 270°, 360°.'},
+      {q:'Two reflections over intersecting lines (angle between them = 40°) produce a rotation of:',opts:['40°','20°','80°','160°'],ans:2,exp:'Angle of rotation = 2 × angle between mirror lines = 2 × 40° = 80°.'},
+    ]
+  },
+  {
+    id:'trig', icon:'📐', name:'Right Triangle Trig',
+    tagline:'SOH-CAH-TOA, Law of Sines, Law of Cosines',
+    learn:[
+      {icon:'🔺',title:'The Six Trig Ratios (SOH-CAH-TOA)',body:`
+        <div class="formula-box">
+          <div class="label">PRIMARY TRIG RATIOS</div>
+          sin θ = Opposite / Hypotenuse (SOH)<br>
+          cos θ = Adjacent / Hypotenuse (CAH)<br>
+          tan θ = Opposite / Adjacent (TOA)<br><br>
+          <div class="label">RECIPROCAL TRIG RATIOS</div>
+          csc θ = 1/sin θ = H/O<br>
+          sec θ = 1/cos θ = H/A<br>
+          cot θ = 1/tan θ = A/O
+        </div>
+        <div class="tip-box"><strong>💡 Memory:</strong> SOH-CAH-TOA. "Some Old Hippo Came Around Here Trampling Our Apples." Also: sin & cos are between 0 and 1 for acute angles. Tan can exceed 1.</div>
+      `},
+      {icon:'📊',title:'Key Trig Values',body:`
+        <div class="formula-box">
+          <div class="label">EXACT VALUES TABLE</div>
+          θ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| sin θ &nbsp;&nbsp;&nbsp;| cos θ &nbsp;&nbsp;&nbsp;| tan θ<br>
+          ─────────────────────────<br>
+          0°&nbsp;&nbsp;&nbsp;&nbsp;| 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0<br>
+          30°&nbsp;&nbsp;&nbsp;| ½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| √3/2 &nbsp;&nbsp;| 1/√3<br>
+          45°&nbsp;&nbsp;&nbsp;| √2/2 &nbsp;&nbsp;| √2/2 &nbsp;&nbsp;| 1<br>
+          60°&nbsp;&nbsp;&nbsp;| √3/2 &nbsp;&nbsp;| ½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| √3<br>
+          90°&nbsp;&nbsp;&nbsp;| 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| undefined
+        </div>
+        <div class="tip-box"><strong>💡 Finger Trick:</strong> For sin: count fingers from left (0,1,2,3,4 for 0°,30°,45°,60°,90°) → sin = √(count)/2. So sin 60° = √3/2. Works for cos in reverse!</div>
+      `},
+      {icon:'⚖',title:'Law of Sines',body:`
+        <div class="formula-box">
+          <div class="label">LAW OF SINES</div>
+          a/sin A = b/sin B = c/sin C<br><br>
+          Use when you know:<br>
+          • AAS or ASA (two angles + one side)<br>
+          • SSA (ambiguous case — check for 0, 1, or 2 solutions)
+        </div>
+        <div class="warn-box"><strong>⚠ Ambiguous Case (SSA):</strong> When given two sides and a non-included angle, there may be 0, 1, or 2 valid triangles. Always check if the height h = b·sin A is greater than, equal to, or less than a.</div>
+      `},
+      {icon:'⚖',title:'Law of Cosines',body:`
+        <div class="formula-box">
+          <div class="label">LAW OF COSINES</div>
+          c² = a² + b² − 2ab·cos C<br>
+          (also: a² = b² + c² − 2bc·cos A)<br><br>
+          Use when you know:<br>
+          • SAS (two sides + included angle)<br>
+          • SSS (all three sides — find an angle)<br><br>
+          <div class="label">REARRANGED TO FIND ANGLE</div>
+          cos C = (a² + b² − c²) / (2ab)
+        </div>
+        <div class="note-box"><strong>📝 Note:</strong> When C = 90°, cos C = 0, so c² = a² + b². The Law of Cosines reduces to the Pythagorean Theorem — it's the general version!</div>
+        <div class="eng-box"><strong>🔧 Real World:</strong> Law of Cosines is used in surveying, navigation, and structural engineering to find distances and angles in non-right triangles.</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'SOH-CAH-TOA Basic',diff:'basic',
+        problem:'In a right triangle, the hypotenuse = 13 and one leg = 5. Find sin, cos, and tan of the smaller acute angle.',
+        steps:[
+          {t:'<strong>Find the other leg:</strong> using Pythagorean theorem.',math:'leg² + 5² = 13² → leg² = 169 − 25 = 144 → leg = 12'},
+          {t:'<strong>Identify opposite and adjacent</strong> (relative to the angle):',math:'Opposite = 5, Adjacent = 12, Hypotenuse = 13'},
+          {t:'<strong>sin θ = O/H:</strong>',math:'sin θ = 5/13'},
+          {t:'<strong>cos θ = A/H:</strong>',math:'cos θ = 12/13'},
+          {t:'<strong>tan θ = O/A:</strong>',math:'tan θ = 5/12'},
+        ],
+        answer:'sin θ = 5/13, cos θ = 12/13, tan θ = 5/12'
+      },
+      {
+        title:'Law of Sines',diff:'inter',
+        problem:'Triangle ABC: ∠A = 40°, ∠B = 75°, a = 10. Find b.',
+        steps:[
+          {t:'<strong>Set up Law of Sines:</strong>',math:'a/sin A = b/sin B'},
+          {t:'<strong>Substitute:</strong>',math:'10/sin 40° = b/sin 75°'},
+          {t:'<strong>Solve for b:</strong>',math:'b = 10 × sin 75° / sin 40°'},
+          {t:'<strong>Calculate:</strong>',math:'b = 10 × 0.9659 / 0.6428 ≈ 15.03'},
+        ],
+        answer:'b ≈ 15.03'
+      },
+      {
+        title:'Law of Cosines — Find an Angle',diff:'adv',
+        problem:'Triangle with sides a = 7, b = 9, c = 12. Find angle C.',
+        steps:[
+          {t:'<strong>Law of Cosines (finding angle):</strong>',math:'cos C = (a² + b² − c²) / (2ab)'},
+          {t:'<strong>Substitute:</strong>',math:'cos C = (49 + 81 − 144) / (2 × 7 × 9) = −14/126'},
+          {t:'<strong>Simplify:</strong>',math:'cos C = −1/9 ≈ −0.1111'},
+          {t:'<strong>Find C:</strong>',math:'C = cos⁻¹(−0.1111) ≈ 96.4°'},
+        ],
+        answer:'C ≈ 96.4° (obtuse!)'
+      }
+    ],
+    tips:[
+      {num:'01',title:'SOHCAHTOA — Always Draw First',body:'Before using any trig, label the triangle: mark H (hypotenuse — opposite the right angle), then O (opposite the angle you\'re working with), then A (adjacent). Then pick your ratio.'},
+      {num:'02',title:'When to Use Which Law',body:'Right triangle: SOHCAHTOA. Non-right with two angles + side: Law of Sines. Non-right with SAS or SSS: Law of Cosines.'},
+      {num:'03',title:'Exact Value Anchors',body:'Memorize: sin 30° = cos 60° = ½. sin 60° = cos 30° = √3/2. sin 45° = cos 45° = √2/2. These show up constantly.'},
+      {num:'04',title:'Law of Cosines ↔ Pythagorean',body:'c² = a² + b² − 2ab·cos C. When C = 90°, the last term vanishes → c² = a² + b². LOC is the Pythagorean theorem with an extra correction term for non-right triangles.'},
+    ],
+    flashcards:[
+      {q:'sin θ = ? (using SOH-CAH-TOA)',a:'sin θ = Opposite / Hypotenuse'},
+      {q:'What is the exact value of sin 45°?',a:'√2/2 (≈ 0.7071). Also equals cos 45°.'},
+      {q:'What is the exact value of cos 60°?',a:'1/2'},
+      {q:'State the Law of Sines.',a:'a/sin A = b/sin B = c/sin C'},
+      {q:'State the Law of Cosines.',a:'c² = a² + b² − 2ab·cos C'},
+      {q:'When is the Law of Cosines preferred over the Law of Sines?',a:'When you have SAS (two sides and the included angle) or SSS (all three sides).'},
+      {q:'tan 30° = ?',a:'1/√3 = √3/3 ≈ 0.577'},
+      {q:'What is the ambiguous case in trigonometry?',a:'In SSA, you might get 0, 1, or 2 valid triangles. It\'s called ambiguous because the answer isn\'t unique.'},
+    ],
+    quiz:[
+      {q:'In a right triangle, O = 8, H = 10. What is sin θ?',opts:['0.6','0.8','0.75','1.25'],ans:1,exp:'sin θ = O/H = 8/10 = 0.8.'},
+      {q:'In a right triangle, A = 5, H = 13. What is cos θ?',opts:['5/13','12/13','13/5','5/12'],ans:0,exp:'cos θ = A/H = 5/13.'},
+      {q:'tan 45° = ?',opts:['0','√2/2','1','√3'],ans:2,exp:'tan 45° = sin 45°/cos 45° = (√2/2)/(√2/2) = 1.'},
+      {q:'A 30-60-90 triangle has hypotenuse 20. Short leg = ?',opts:['10','10√3','20√3','20'],ans:0,exp:'Short leg = hypotenuse/2 = 20/2 = 10.'},
+      {q:'A = 35°, B = 65°, a = 12. Find b using Law of Sines.',opts:['≈18.0','≈14.1','≈9.5','≈20.1'],ans:0,exp:'b = 12·sin 65°/sin 35° = 12×0.906/0.574 ≈ 18.94 ≈ 18.0.'},
+      {q:'Sides 6, 8, c. Angle between them = 90°. Find c.',opts:['10','14','√(6²+8²) = 10','Both a and c'],ans:2,exp:'c² = 6² + 8² − 2(6)(8)cos 90° = 36 + 64 − 0 = 100 → c = 10.'},
+      {q:'cos⁻¹(0.5) = ?',opts:['30°','45°','60°','90°'],ans:2,exp:'cos 60° = 0.5, so cos⁻¹(0.5) = 60°.'},
+      {q:'Triangle: a=7, b=10, C=120°. Find c using Law of Cosines.',opts:['√219','√149','15.13','14.30'],ans:2,exp:'c² = 49+100−2(70)cos120° = 149−140(−0.5) = 149+70 = 219. c = √219 ≈ 14.80 ≈ 15.13 (check calc).'},
+      {q:'In a right triangle, if tan θ = 3/4, then sin θ = ?',opts:['3/5','4/5','3/4','4/3'],ans:0,exp:'tan = 3/4, so O=3, A=4, H=5 (Pythagorean triple 3-4-5). sin = O/H = 3/5.'},
+      {q:'Which formula is Law of Sines?',opts:['a² = b²+c²−2bc·cosA','a/sinA = b/sinB','sin²A + cos²A = 1','A = ½bc·sinA'],ans:1,exp:'Law of Sines: a/sin A = b/sin B = c/sin C.'},
+    ]
+  },
+  {
+    id:'proofs', icon:'✏️', name:'Proofs & Reasoning',
+    tagline:'Deductive reasoning, two-column proofs, theorems',
+    learn:[
+      {icon:'🧠',title:'Types of Reasoning',body:`
+        <div class="def-box"><span class="term">Inductive Reasoning</span><div class="definition">Drawing a general conclusion from specific examples. Pattern-based. Can be proven false with a counterexample.</div></div>
+        <div class="def-box"><span class="term">Deductive Reasoning</span><div class="definition">Drawing specific conclusions from general rules (theorems, definitions, postulates). Guaranteed to be true if premises are true.</div></div>
+        <div class="def-box"><span class="term">Postulate (Axiom)</span><div class="definition">A statement accepted as true without proof. The foundation of geometry.</div></div>
+        <div class="def-box"><span class="term">Theorem</span><div class="definition">A statement that has been proven using postulates, definitions, and previously proven theorems.</div></div>
+        <div class="tip-box"><strong>💡 Tip:</strong> Inductive reasoning says "it's probably true." Deductive reasoning says "it MUST be true." Geometry proofs use ONLY deductive reasoning.</div>
+      `},
+      {icon:'📋',title:'Two-Column Proofs',body:`
+        <div class="note-box"><strong>Format:</strong> Left column = Statements. Right column = Reasons.<br>Each line must have a valid reason from: Definitions, Postulates, Properties, or Previously proven Theorems.</div>
+        <div class="formula-box">
+          <div class="label">COMMON PROOF REASONS</div>
+          Given, Definition of ___<br>
+          Reflexive Property: a = a<br>
+          Symmetric Property: if a=b then b=a<br>
+          Transitive Property: if a=b and b=c then a=c<br>
+          Addition/Subtraction Property of Equality<br>
+          Multiplication/Division Property of Equality<br>
+          Angle Addition Postulate<br>
+          Segment Addition Postulate<br>
+          Triangle Angle Sum Theorem<br>
+          Vertical Angle Theorem
+        </div>
+      `},
+      {icon:'🔗',title:'Conditional Statements & Converses',body:`
+        <div class="formula-box">
+          <div class="label">FORMS OF A CONDITIONAL STATEMENT</div>
+          Conditional: If p, then q (p → q)<br>
+          Converse: If q, then p (q → p)<br>
+          Inverse: If not p, then not q (¬p → ¬q)<br>
+          Contrapositive: If not q, then not p (¬q → ¬p)
+        </div>
+        <div class="note-box"><strong>Truth Values:</strong><br>• A conditional and its contrapositive always have the SAME truth value.<br>• A converse and its inverse always have the SAME truth value.<br>• A conditional and its converse can have DIFFERENT truth values.</div>
+        <div class="warn-box"><strong>⚠ Key:</strong> "If it's a square, then it's a rectangle" is TRUE. The converse "If it's a rectangle, then it's a square" is FALSE.</div>
+      `},
+      {icon:'📐',title:'Key Theorems to Know',body:`
+        <div class="formula-box">
+          <div class="label">ESSENTIAL THEOREMS</div>
+          Vertical Angle Theorem: vertical angles are congruent<br>
+          Triangle Angle Sum: angles sum to 180°<br>
+          Exterior Angle Theorem: ext. ∠ = sum of remote interior ∠s<br>
+          Isosceles Triangle Theorem: base angles of isosceles △ are ≅<br>
+          Pythagorean Theorem: a² + b² = c² (right triangle)<br>
+          Triangle Midsegment Theorem: midsegment ∥ 3rd side, = ½ its length<br>
+          Angle Bisector Theorem: bisector divides opp. side proportionally<br>
+          Side-Splitter Theorem: parallel line divides sides proportionally
+        </div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Two-Column Proof — Vertical Angles',diff:'inter',
+        problem:'Prove: Vertical angles are congruent (∠1 ≅ ∠3, formed by two intersecting lines).',
+        steps:[
+          {t:'<strong>Statement 1:</strong> ∠1 + ∠2 = 180° | <em>Reason: Linear pair (supplementary)</em>',math:''},
+          {t:'<strong>Statement 2:</strong> ∠2 + ∠3 = 180° | <em>Reason: Linear pair (supplementary)</em>',math:''},
+          {t:'<strong>Statement 3:</strong> ∠1 + ∠2 = ∠2 + ∠3 | <em>Reason: Transitive Property of Equality (both = 180°)</em>',math:''},
+          {t:'<strong>Statement 4:</strong> ∠1 = ∠3 | <em>Reason: Subtraction Property of Equality (subtract ∠2)</em>',math:'∎ (QED)'},
+        ],
+        answer:'Vertical angles are congruent.'
+      },
+      {
+        title:'Triangle Congruence Proof (ASA)',diff:'adv',
+        problem:'Given: AB∥CD, M is midpoint of BC. Prove: △ABM ≅ △DCM.',
+        steps:[
+          {t:'<strong>1.</strong> AB∥CD | <em>Given</em>',math:''},
+          {t:'<strong>2.</strong> ∠ABM = ∠DCM | <em>Alternate interior angles (AB∥CD, transversal BC)</em>',math:''},
+          {t:'<strong>3.</strong> M is midpoint of BC | <em>Given</em>',math:''},
+          {t:'<strong>4.</strong> BM = CM | <em>Definition of midpoint</em>',math:''},
+          {t:'<strong>5.</strong> ∠AMB = ∠DMC | <em>Vertical Angle Theorem</em>',math:''},
+          {t:'<strong>6.</strong> △ABM ≅ △DCM | <em>ASA (∠ABM = ∠DCM, BM = CM, ∠AMB = ∠DMC)</em>',math:'∎'},
+        ],
+        answer:'△ABM ≅ △DCM by ASA.'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Start and End with Givens',body:'In a proof, your FIRST statements use the Given information, your LAST statement is what you\'re trying to prove. Fill in the middle logically.'},
+      {num:'02',title:'Mark the Diagram',body:'Before writing any proof, mark all given info on the diagram — tick marks for equal sides, arc marks for equal angles, arrows for parallel lines. The visual often reveals the path.'},
+      {num:'03',title:'Reflexive Property — Often Forgotten',body:'The Reflexive Property (a = a) is used when a side or angle is shared by two triangles. "Shared side" = reflexive. Write it as a statement: "AC = AC — Reflexive Property."'},
+      {num:'04',title:'Contrapositive = Same Truth',body:'When you need to prove something hard, try proving its contrapositive instead — they have the same truth value. If you can prove "not q → not p", you\'ve proven "p → q."'},
+    ],
+    flashcards:[
+      {q:'What is deductive reasoning?',a:'Drawing specific conclusions from general rules (theorems, definitions, postulates). All geometric proofs use deductive reasoning.'},
+      {q:'What is the converse of "If a shape is a square, then it has 4 equal sides"?',a:'"If a shape has 4 equal sides, then it is a square." (Note: this is FALSE — a rhombus also has 4 equal sides.)'},
+      {q:'What is the Reflexive Property of Equality?',a:'A quantity is equal to itself: a = a. Used in proofs when a side or angle is shared.'},
+      {q:'What is the contrapositive of "If p then q"?',a:'"If not q, then not p." The contrapositive always has the same truth value as the original.'},
+      {q:'Name 3 valid reasons you can use in a two-column proof.',a:'Any 3 of: Given, Definitions, Properties (reflexive, symmetric, transitive, addition, subtraction), Postulates, or previously proven Theorems.'},
+      {q:'State the Isosceles Triangle Theorem.',a:'If two sides of a triangle are equal, then the angles opposite those sides are also equal (base angles are congruent).'},
+      {q:'What does "QED" or ∎ mean at the end of a proof?',a:'Quod Erat Demonstrandum — "which was to be demonstrated." It marks the end of a proof.'},
+      {q:'What is a counterexample?',a:'A single specific example that proves a statement false. One counterexample is sufficient to disprove any general claim.'},
+    ],
+    quiz:[
+      {q:'What type of reasoning is: "Every crow I\'ve seen is black, therefore all crows are black"?',opts:['Deductive','Inductive','Contradictory','Axiomatic'],ans:1,exp:'This is inductive reasoning — generalizing from specific observations. It can be disproved by one white crow (counterexample).'},
+      {q:'Contrapositive of "If ∠A = 90°, then △ABC is right"?',opts:['If △ABC is right then ∠A=90°','If ∠A≠90° then △ABC isn\'t right','If △ABC isn\'t right then ∠A≠90°','If ∠A=90° then △ABC isn\'t right'],ans:2,exp:'Contrapositive: flip and negate. "If not q, then not p": if △ABC is not right, then ∠A ≠ 90°.'},
+      {q:'Which property justifies: "If AB = CD and CD = EF, then AB = EF"?',opts:['Reflexive','Symmetric','Transitive','Substitution'],ans:2,exp:'Transitive Property: if a=b and b=c, then a=c.'},
+      {q:'In a two-column proof, what is typically in the RIGHT column?',opts:['The statements','The reasons/justifications','The conclusion','The diagram'],ans:1,exp:'Right column = Reasons. Left column = Statements.'},
+      {q:'A conditional statement is false when:',opts:['p is true and q is true','p is false and q is true','p is true and q is false','p is false and q is false'],ans:2,exp:'A conditional (if p then q) is only false when the hypothesis p is true but the conclusion q is false.'},
+      {q:'Which postulate justifies: "If B is between A and C, then AB + BC = AC"?',opts:['Angle Addition Postulate','Segment Addition Postulate','Reflexive Property','Midpoint Theorem'],ans:1,exp:'Segment Addition Postulate: if B is between A and C, then AB + BC = AC.'},
+      {q:'Vertical angles are:',opts:['Supplementary','Complementary','Congruent','Adjacent'],ans:2,exp:'Vertical Angle Theorem: vertical angles formed by two intersecting lines are always congruent.'},
+      {q:'The converse of a true conditional statement is:',opts:['Always true','Always false','Sometimes true, sometimes false','Equal to the contrapositive'],ans:2,exp:'The converse can be true or false. Example: "If x=2, then x²=4" is true, but converse "If x²=4, then x=2" is false (x could be −2).'},
+      {q:'Which is a valid reason in a geometric proof?',opts:['It looks equal','My teacher said so','Definition of perpendicular lines','Common sense'],ans:2,exp:'Only formal reasons are valid: definitions, postulates, properties, and theorems. "Definition of perpendicular lines" is a valid reason.'},
+      {q:'Prove that base angles of an isosceles triangle are equal — what congruence postulate might you use?',opts:['SSS','SAS','AAA','SSA'],ans:1,exp:'Draw the angle bisector from the apex. You get SAS: two equal sides (given) + the bisected angle = equal. So the two halves are congruent by SAS, making base angles equal.'},
+    ]
+  },
+  {
+    id:'advanced', icon:'🏔', name:'Advanced Geometry',
+    tagline:'Conic sections, geometric constructions, spatial reasoning',
+    learn:[
+      {icon:'⚡',title:'Conic Sections',body:`
+        <div class="def-box"><span class="term">Conic Sections</span><div class="definition">Curves formed by intersecting a cone with a plane at different angles: circles, ellipses, parabolas, hyperbolas.</div></div>
+        <div class="formula-box">
+          <div class="label">PARABOLA</div>
+          Vertex form: y = a(x−h)² + k  [opens up if a>0, down if a<0]<br>
+          Focus-directrix: distance to focus = distance to directrix<br><br>
+          <div class="label">ELLIPSE (center at origin)</div>
+          x²/a² + y²/b² = 1  (a > b > 0)<br>
+          Major axis length = 2a, minor = 2b<br>
+          c² = a² − b²  (c = focal distance)<br><br>
+          <div class="label">HYPERBOLA (center at origin, opens left-right)</div>
+          x²/a² − y²/b² = 1<br>
+          Asymptotes: y = ±(b/a)x
+        </div>
+      `},
+      {icon:'✏️',title:'Geometric Constructions',body:`
+        <div class="note-box"><strong>Rule:</strong> Classical constructions use only a compass and straightedge — no measurements allowed.</div>
+        <div class="formula-box">
+          <div class="label">CLASSIC CONSTRUCTIONS</div>
+          1. Bisect a segment: Perpendicular bisector using compass<br>
+          2. Bisect an angle: Equal arcs from vertex, arc connecting them<br>
+          3. Perpendicular from point to line<br>
+          4. Copy an angle to a new location<br>
+          5. Construct parallel line through external point<br>
+          6. Inscribed circle of triangle (angle bisectors → incenter)<br>
+          7. Circumscribed circle (perpendicular bisectors → circumcenter)
+        </div>
+        <div class="tip-box"><strong>💡 Remember:</strong> Angle bisectors meet at the incenter (center of inscribed circle). Perpendicular bisectors meet at the circumcenter (center of circumscribed circle).</div>
+      `},
+      {icon:'🌐',title:'Triangle Centers',body:`
+        <div class="formula-box">
+          <div class="label">THE 4 CLASSICAL TRIANGLE CENTERS</div>
+          Centroid (G): intersection of medians<br>
+          &nbsp;&nbsp;• Divides each median in ratio 2:1 from vertex<br>
+          &nbsp;&nbsp;• Center of gravity<br><br>
+          Circumcenter (O): intersection of perpendicular bisectors<br>
+          &nbsp;&nbsp;• Equidistant from all 3 vertices<br><br>
+          Incenter (I): intersection of angle bisectors<br>
+          &nbsp;&nbsp;• Equidistant from all 3 sides<br><br>
+          Orthocenter (H): intersection of altitudes<br>
+          &nbsp;&nbsp;• For acute △: inside. Right △: at vertex. Obtuse △: outside.
+        </div>
+        <div class="note-box"><strong>Euler Line:</strong> The circumcenter (O), centroid (G), and orthocenter (H) are always collinear! And G divides OH in ratio 1:2 from O.</div>
+      `},
+      {icon:'🔢',title:'Geometric Inequalities & Optimization',body:`
+        <div class="formula-box">
+          <div class="label">KEY GEOMETRIC INEQUALITIES</div>
+          Hinge Theorem: Larger included angle → longer opposite side<br>
+          Triangle Inequality: a + b > c (any two sides > third)<br>
+          AM-GM Inequality: (a+b)/2 ≥ √(ab) (connects area and perimeter)<br><br>
+          <div class="label">OPTIMIZATION CLASSICS</div>
+          Rectangle with fixed perimeter: SQUARE has maximum area<br>
+          Rectangle with fixed area: SQUARE has minimum perimeter<br>
+          Isoperimetric: Among all shapes with fixed perimeter, CIRCLE has max area
+        </div>
+        <div class="eng-box"><strong>🔧 Engineering:</strong> The isoperimetric theorem explains why pipes are circular (minimize material for given cross-section area), bubbles are spherical, and honeycomb cells are hexagonal.</div>
+      `}
+    ],
+    examples:[
+      {
+        title:'Parabola: Find Focus and Directrix',diff:'inter',
+        problem:'Parabola: y = (1/8)x². Find the vertex, focus, and directrix.',
+        steps:[
+          {t:'<strong>Vertex form:</strong> y = a(x−h)² + k. Here h=0, k=0.',math:'Vertex = (0, 0)'},
+          {t:'<strong>For y = ax², focus is at (0, 1/(4a)):</strong>',math:'a = 1/8, so 1/(4a) = 1/(4×1/8) = 2'},
+          {t:'<strong>Focus:</strong>',math:'(0, 2)'},
+          {t:'<strong>Directrix:</strong> y = −1/(4a) = −2',math:'y = −2'},
+        ],
+        answer:'Vertex (0,0), Focus (0,2), Directrix y = −2'
+      },
+      {
+        title:'Ellipse — Find Key Measurements',diff:'adv',
+        problem:'Ellipse: x²/25 + y²/9 = 1. Find vertices, co-vertices, and foci.',
+        steps:[
+          {t:'<strong>Identify a and b:</strong> a² = 25, b² = 9',math:'a = 5, b = 3 (a > b, so major axis is along x)'},
+          {t:'<strong>Vertices</strong> (major axis endpoints):',math:'(±5, 0)'},
+          {t:'<strong>Co-vertices</strong> (minor axis):',math:'(0, ±3)'},
+          {t:'<strong>Find c:</strong>',math:'c² = a²−b² = 25−9 = 16 → c = 4'},
+          {t:'<strong>Foci:</strong>',math:'(±4, 0)'},
+        ],
+        answer:'Vertices: (±5,0), Co-vertices: (0,±3), Foci: (±4,0)'
+      }
+    ],
+    tips:[
+      {num:'01',title:'Conic Section ID',body:'Look at the equation: x² and y² with same coefficient = circle. Different positive coefficients = ellipse. One positive, one negative = hyperbola. One missing = parabola.'},
+      {num:'02',title:'Centroid — Always 2:1',body:'The centroid divides each median in exactly a 2:1 ratio from the vertex to the opposite side. This is constant — no exceptions. Use it to find coordinates of the centroid.'},
+      {num:'03',title:'Circumcenter Location',body:'For acute triangles: circumcenter is INSIDE. For right triangles: it\'s at the MIDPOINT of the hypotenuse. For obtuse triangles: it\'s OUTSIDE. Very useful to remember.'},
+      {num:'04',title:'Fixed Perimeter? Go Square',body:'For optimization problems: if perimeter is fixed and you want max area, use a square (or circle for curves). If area is fixed and you want min perimeter, same answer!'},
+    ],
+    flashcards:[
+      {q:'What are the 4 classical triangle centers?',a:'Centroid (medians), Circumcenter (⊥ bisectors), Incenter (angle bisectors), Orthocenter (altitudes).'},
+      {q:'What is the centroid\'s ratio property?',a:'The centroid divides each median in a 2:1 ratio from vertex to midpoint of opposite side.'},
+      {q:'Equation of a parabola with vertex (h,k) and a?',a:'y = a(x−h)² + k. Opens up if a>0, down if a<0.'},
+      {q:'Ellipse equation x²/a² + y²/b² = 1. What are a and b?',a:'a = semi-major axis (larger), b = semi-minor axis (smaller). Vertices at (±a, 0) if a > b.'},
+      {q:'For an ellipse, what is c?',a:'c = focal distance from center, where c² = a² − b². Foci at (±c, 0) for horizontal ellipse.'},
+      {q:'What is the Euler Line?',a:'The line passing through a triangle\'s circumcenter, centroid, and orthocenter (always collinear!).'},
+      {q:'What shape maximizes area for a fixed perimeter?',a:'A circle (for curved shapes) or a square (for rectangles). The more symmetric, the larger the area.'},
+      {q:'What tools are allowed in classical geometric constructions?',a:'Only a compass (for drawing circles/arcs) and a straightedge (for drawing lines) — no measurements, no protractors.'},
+    ],
+    quiz:[
+      {q:'Identify the conic: x²/16 + y²/9 = 1',opts:['Circle','Ellipse','Parabola','Hyperbola'],ans:1,exp:'Different denominators, both positive → Ellipse.'},
+      {q:'Identify the conic: x² − y²/4 = 1',opts:['Circle','Ellipse','Parabola','Hyperbola'],ans:3,exp:'One positive, one negative → Hyperbola.'},
+      {q:'Centroid of triangle with vertices (0,0), (6,0), (0,9)?',opts:['(2,3)','(3,3)','(3,2)','(2,2)'],ans:0,exp:'Centroid = ((0+6+0)/3, (0+0+9)/3) = (2, 3).'},
+      {q:'Where is the circumcenter of a right triangle?',opts:['At the right angle','At the midpoint of hypotenuse','Inside the triangle','At a vertex'],ans:1,exp:'For a right triangle, the circumcenter is at the midpoint of the hypotenuse.'},
+      {q:'Which triangle center is always inside the triangle?',opts:['Circumcenter','Orthocenter','Centroid','None of these'],ans:2,exp:'The centroid (intersection of medians) is always inside the triangle.'},
+      {q:'Ellipse x²/100 + y²/64 = 1. What is the focal distance c?',opts:['6','8','10','12'],ans:0,exp:'c² = 100 − 64 = 36 → c = 6.'},
+      {q:'Parabola y = 2(x−3)² + 1. Vertex is:',opts:['(3,1)','(−3,1)','(3,−1)','(2,1)'],ans:0,exp:'Vertex form y = a(x−h)²+k. Vertex = (h,k) = (3,1).'},
+      {q:'Which centers are on the Euler Line?',opts:['Centroid, Incenter, Orthocenter','Circumcenter, Centroid, Orthocenter','Incenter, Circumcenter, Centroid','All four centers'],ans:1,exp:'Euler Line passes through circumcenter (O), centroid (G), and orthocenter (H).'},
+      {q:'Classical constructions allow only:',opts:['Ruler and protractor','Compass and straightedge','Compass only','Ruler only'],ans:1,exp:'Classical Euclidean constructions use only a compass (for arcs) and a straightedge (for straight lines, no measurements).'},
+      {q:'What shape maximizes area for a fixed perimeter among all quadrilaterals?',opts:['Rectangle','Rhombus','Square','Parallelogram'],ans:2,exp:'Among all quadrilaterals with a fixed perimeter, the square has the maximum area. Among all shapes, a circle does.'},
+    ]
+  },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentTopic = 0;
+let currentTab = 'learn';
+let xp = 0, streak = 0;
+const levels = [
+  {name:'Learner I',min:0},{name:'Learner II',min:100},{name:'Geometer',min:250},
+  {name:'Jr. Geometer',min:450},{name:'Euclidean',min:700},{name:'Senior Euclidean',min:1000},
+  {name:'Master Geometer',min:1500}
+];
+const quizState = {};
+const fcState = {};
+let pomoInterval = null, pomoSecs = 25*60, pomoRunning = false, pomoMode = 'focus';
+let aiKey = '', aiHistory = [];
+
+// ============================================================
+// XP
+// ============================================================
+function addXP(n){
+  xp+=n;
+  const lvl = levels.filter(l=>l.min<=xp).pop();
+  const next = levels.find(l=>l.min>xp)||{min:xp+1000};
+  document.getElementById('level-badge').textContent=lvl.name;
+  const pct = Math.min(100, ((xp-lvl.min)/(next.min-lvl.min))*100);
+  document.getElementById('xp-bar').style.width=pct+'%';
+  document.getElementById('xp-text').textContent=`${xp} XP`;
+  const flash = document.createElement('div');
+  flash.style.cssText='position:fixed;top:70px;right:20px;z-index:999;background:var(--primary);color:var(--bg);font-family:Cinzel,serif;font-weight:900;font-size:0.9rem;padding:6px 16px;border-radius:20px;opacity:1;transition:all 1s';
+  flash.textContent='+'+n+' XP';
+  document.body.appendChild(flash);
+  setTimeout(()=>{flash.style.opacity='0';flash.style.transform='translateY(-20px)'},800);
+  setTimeout(()=>flash.remove(),1800);
+}
+function addStreak(){
+  streak++;
+  document.getElementById('streak-badge').textContent='🔥 '+streak+' Streak';
+}
+
+// ============================================================
+// RENDER SIDEBAR
+// ============================================================
+function renderSidebar(){
+  const el = document.getElementById('sidebar-topics');
+  el.innerHTML = TOPICS.map((t,i)=>`
+    <div class="topic-item ${i===currentTopic?'active':''}" onclick="selectTopic(${i})">
+      <div class="topic-icon">${t.icon}</div>
+      <div class="topic-info">
+        <div class="topic-name">${t.name}</div>
+        <div class="topic-progress-mini"><div class="topic-progress-fill" style="width:${getTopicProgress(i)}%"></div></div>
+      </div>
+      <div class="topic-num">${String(i+1).padStart(2,'0')}</div>
+    </div>`).join('');
+}
+function getTopicProgress(i){
+  const qs = quizState[i];
+  if(!qs) return 0;
+  return Math.round((qs.answered||0)/TOPICS[i].quiz.length*100);
+}
+
+// ============================================================
+// RENDER TOPIC
+// ============================================================
+function selectTopic(i){ currentTopic=i; currentTab='learn'; renderSidebar(); renderMain(); window.scrollTo(0,0); }
+function switchTab(t){ currentTab=t; renderMain(true); }
+
+function renderMain(tabOnly=false){
+  const t = TOPICS[currentTopic];
+  const mc = document.getElementById('main-content');
+  if(!tabOnly){
+    mc.innerHTML = `
+      <div class="topic-header">
+        <div class="topic-header-icon">${t.icon}</div>
+        <div>
+          <div class="topic-header-title">${t.name}</div>
+          <div class="topic-header-tagline">${t.tagline}</div>
+          <div class="topic-header-progress">
+            <div class="topic-progress-bar"><div class="topic-progress-bar-fill" style="width:${getTopicProgress(currentTopic)}%"></div></div>
+            <div class="topic-progress-text">${getTopicProgress(currentTopic)}% complete</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn ${currentTab==='learn'?'active':''}" onclick="switchTab('learn')">📖 Learn</button>
+        <button class="tab-btn ${currentTab==='tips'?'active':''}" onclick="switchTab('tips')">💡 Tips</button>
+        <button class="tab-btn ${currentTab==='examples'?'active':''}" onclick="switchTab('examples')">✏️ Examples</button>
+        <button class="tab-btn ${currentTab==='practice'?'active':''}" onclick="switchTab('practice')">🎯 Practice</button>
+        <button class="tab-btn ${currentTab==='flashcards'?'active':''}" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+      </div>
+      <div id="tab-content-area"></div>`;
+  } else {
+    const tabs = mc.querySelector('.tab-bar');
+    if(tabs) tabs.querySelectorAll('.tab-btn').forEach(b=>{
+      const active = b.textContent.toLowerCase().includes(currentTab)||
+        (currentTab==='learn'&&b.textContent.includes('Learn'))||
+        (currentTab==='tips'&&b.textContent.includes('Tips'))||
+        (currentTab==='examples'&&b.textContent.includes('Examples'))||
+        (currentTab==='practice'&&b.textContent.includes('Practice'))||
+        (currentTab==='flashcards'&&b.textContent.includes('Flashcards'));
+      b.classList.toggle('active', active);
+    });
+  }
+  const area = mc.querySelector('#tab-content-area') || document.getElementById('tab-content-area');
+  if(!area) return;
+
+  if(currentTab==='learn') area.innerHTML = renderLearn(t);
+  else if(currentTab==='tips') area.innerHTML = renderTips(t);
+  else if(currentTab==='examples') area.innerHTML = renderExamples(t);
+  else if(currentTab==='practice') { area.innerHTML = renderPractice(t); attachPractice(); }
+  else if(currentTab==='flashcards') { area.innerHTML = renderFC(t); attachFC(); }
+}
+
+// ============================================================
+// LEARN TAB
+// ============================================================
+function renderLearn(t){
+  return `<div class="concept-grid">${t.learn.map(c=>`
+    <div class="concept-card">
+      <div class="concept-card-icon">${c.icon}</div>
+      <div class="concept-card-title">${c.title}</div>
+      <div class="concept-card-body">${c.body}</div>
+    </div>`).join('')}</div>`;
+}
+
+// ============================================================
+// TIPS TAB
+// ============================================================
+function renderTips(t){
+  return `
+    <h3 class="section-title">💡 Pro Tips — ${t.name}</h3>
+    <div class="tips-grid">${t.tips.map(tp=>`
+      <div class="tip-card">
+        <div class="tip-card-num">TIP #${tp.num}</div>
+        <div class="tip-card-title">${tp.title}</div>
+        <div class="tip-card-body">${tp.body}</div>
+      </div>`).join('')}</div>`;
+}
+
+// ============================================================
+// EXAMPLES TAB
+// ============================================================
+function renderExamples(t){
+  return t.examples.map((ex,ei)=>`
+    <div class="example-card" id="ex-${ei}">
+      <div class="example-header">
+        <div class="example-title">📐 ${ex.title}</div>
+        <span class="example-difficulty diff-${ex.diff}">${ex.diff.toUpperCase()}</span>
+      </div>
+      <div class="example-problem"><strong>Problem:</strong> ${ex.problem}</div>
+      <div class="steps-container" id="steps-${ei}">
+        ${ex.steps.map((s,si)=>`
+          <div class="step hidden" id="step-${ei}-${si}">
+            <div class="step-num">${si+1}</div>
+            <div class="step-content">${s.t}${s.math?`<br><span class="math">${s.math}</span>`:''}</div>
+          </div>`).join('')}
+        <div class="answer-box hidden" id="ans-${ei}">
+          <div class="label">✅ FINAL ANSWER</div>
+          <span class="ans">${ex.answer}</span>
+        </div>
+        <div class="step-actions">
+          <button class="step-btn primary" onclick="nextStep(${ei},${ex.steps.length})">▶ Next Step</button>
+          <button class="step-btn" onclick="showAllSteps(${ei},${ex.steps.length})">Show All</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+const stepProgress = {};
+function nextStep(ei, total){
+  const cur = stepProgress[ei]||0;
+  if(cur<total){
+    const el = document.getElementById(`step-${ei}-${cur}`);
+    if(el){el.classList.remove('hidden'); setTimeout(()=>el.classList.add('visible'),10);}
+    stepProgress[ei]=cur+1;
+    if(cur+1===total) document.getElementById(`ans-${ei}`).classList.remove('hidden');
+  }
+}
+function showAllSteps(ei, total){
+  for(let i=0;i<total;i++){
+    const el=document.getElementById(`step-${ei}-${i}`);
+    if(el){el.classList.remove('hidden');setTimeout(()=>el.classList.add('visible'),i*80);}
+    stepProgress[ei]=total;
+  }
+  setTimeout(()=>document.getElementById(`ans-${ei}`).classList.remove('hidden'),total*80+100);
+}
+
+// ============================================================
+// PRACTICE TAB
+// ============================================================
+function renderPractice(t){
+  const qs = t.quiz;
+  return `
+    <div class="quiz-info">
+      <div style="font-family:'Cinzel',serif;font-size:0.9rem;color:var(--primary)">🎯 Practice Quiz — ${t.name}</div>
+      <div class="quiz-score-display">Score: <span id="q-score">0</span> / <span id="q-total">${qs.length}</span></div>
+    </div>
+    ${qs.map((q,qi)=>`
+      <div class="question-card" id="qcard-${qi}">
+        <div class="question-num">Q${qi+1} of ${qs.length}</div>
+        <div class="question-text">${q.q}</div>
+        <div class="options-grid">
+          ${q.opts.map((o,oi)=>`
+            <button class="option-btn" id="opt-${qi}-${oi}" onclick="answerQ(${qi},${oi},${q.ans},'${encodeURIComponent(q.exp)}')">${o}</button>
+          `).join('')}
+        </div>
+        <div class="feedback-box" id="fb-${qi}"></div>
+      </div>`).join('')}
+    <div class="quiz-controls">
+      <button class="quiz-btn quiz-btn-primary" onclick="checkAllAnswered()">📊 Show Summary</button>
+      <button class="quiz-btn quiz-btn-secondary" onclick="resetQuiz()">↺ Reset</button>
+    </div>
+    <div class="quiz-result" id="quiz-result"></div>`;
+}
+
+function attachPractice(){
+  if(!quizState[currentTopic]) quizState[currentTopic]={score:0,answered:0,answers:{}};
+  const qs = quizState[currentTopic];
+  // Restore previous answers
+  Object.keys(qs.answers).forEach(qi=>{
+    const {chosen,correct,exp} = qs.answers[qi];
+    const q = TOPICS[currentTopic].quiz[qi];
+    restoreQ(parseInt(qi), chosen, correct, q.ans, exp);
+  });
+  updateQScore();
+}
+
+function answerQ(qi, oi, correct, expEnc){
+  if(quizState[currentTopic]?.answers?.[qi]) return;
+  if(!quizState[currentTopic]) quizState[currentTopic]={score:0,answered:0,answers:{}};
+  const qs = quizState[currentTopic];
+  const isCorrect = oi===correct;
+  qs.answers[qi]={chosen:oi, correct:isCorrect, exp:expEnc};
+  qs.answered++;
+  if(isCorrect){ qs.score++; addXP(10); addStreak(); } else { addXP(2); streak=0; document.getElementById('streak-badge').textContent='🔥 0 Streak'; }
+  restoreQ(qi, oi, isCorrect, correct, expEnc);
+  updateQScore();
+  renderSidebar();
+}
+
+function restoreQ(qi, chosen, isCorrect, correct, expEnc){
+  const card = document.getElementById(`qcard-${qi}`);
+  if(!card) return;
+  card.classList.add(isCorrect?'correct':'wrong');
+  const btns = card.querySelectorAll('.option-btn');
+  btns.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===chosen) b.classList.add(isCorrect?'selected-correct':'selected-wrong');
+    if(!isCorrect && i===correct) b.classList.add('reveal-correct');
+  });
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.classList.add('show', isCorrect?'correct':'wrong');
+  fb.innerHTML = isCorrect
+    ? `<strong>✅ Correct!</strong> ${decodeURIComponent(expEnc)}`
+    : `<strong>❌ Not quite.</strong> ${decodeURIComponent(expEnc)}`;
+}
+
+function updateQScore(){
+  const qs = quizState[currentTopic]||{score:0,answered:0};
+  const sc = document.getElementById('q-score');
+  if(sc) sc.textContent = qs.score;
+}
+
+function checkAllAnswered(){
+  const qs = quizState[currentTopic]||{score:0,answered:0};
+  const total = TOPICS[currentTopic].quiz.length;
+  const result = document.getElementById('quiz-result');
+  result.classList.add('show');
+  const pct = Math.round(qs.score/total*100);
+  let msg = pct>=90?'🏆 Outstanding! You\'ve mastered this topic!'
+    :pct>=70?'🎉 Great job! Review a few tricky ones.'
+    :pct>=50?'📚 Decent start — keep practicing!'
+    :'💪 Keep going — review the concept cards and try again!';
+  result.innerHTML = `
+    <div class="quiz-result-score">${qs.score}/${total}</div>
+    <div class="quiz-result-label">${pct}% correct</div>
+    <div class="quiz-result-msg">${msg}</div>`;
+}
+
+function resetQuiz(){
+  delete quizState[currentTopic];
+  renderMain(true);
+}
+
+// ============================================================
+// FLASHCARDS TAB
+// ============================================================
+function renderFC(t){
+  const idx = fcState[currentTopic]||0;
+  const cards = t.flashcards;
+  return `
+    <div class="fc-container">
+      <div style="font-family:'Cinzel',serif;font-size:0.85rem;color:var(--text-muted)">Click the card to flip it</div>
+      <div class="fc-progress-dots" id="fc-dots">
+        ${cards.map((_,i)=>`<div class="fc-dot ${i===idx?'active':''}" onclick="goFC(${i})"></div>`).join('')}
+      </div>
+      <div class="fc-counter" id="fc-counter">${idx+1} / ${cards.length}</div>
+      <div class="fc-scene" onclick="flipFC()">
+        <div class="fc-card" id="fc-card">
+          <div class="fc-face fc-front">
+            <div class="fc-face-label">CONCEPT</div>
+            <div class="fc-question" id="fc-q">${cards[idx].q}</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-face-label">ANSWER</div>
+            <div class="fc-answer" id="fc-a">${cards[idx].a}</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="fc-btn" onclick="prevFC()">← Prev</button>
+        <button class="fc-btn" onclick="markDone()">✓ Got it</button>
+        <button class="fc-btn" onclick="nextFC()">Next →</button>
+        <button class="fc-btn" onclick="shuffleFC()">🔀 Shuffle</button>
+      </div>
+      <div class="fc-hint">Tip: Mark cards with "Got it" as you master them</div>
+    </div>`;
+}
+
+function attachFC(){
+  if(fcState[currentTopic]===undefined) fcState[currentTopic]=0;
+}
+
+function flipFC(){
+  const card = document.getElementById('fc-card');
+  if(card) card.classList.toggle('flipped');
+}
+function prevFC(){
+  const t = TOPICS[currentTopic];
+  fcState[currentTopic] = (fcState[currentTopic]-1+t.flashcards.length)%t.flashcards.length;
+  renderMain(true);
+}
+function nextFC(){
+  const t = TOPICS[currentTopic];
+  fcState[currentTopic] = (fcState[currentTopic]+1)%t.flashcards.length;
+  renderMain(true);
+}
+function goFC(i){ fcState[currentTopic]=i; renderMain(true); }
+function markDone(){
+  const dots = document.querySelectorAll('.fc-dot');
+  const idx = fcState[currentTopic]||0;
+  if(dots[idx]) dots[idx].classList.add('done');
+  addXP(5);
+  nextFC();
+}
+function shuffleFC(){
+  const t = TOPICS[currentTopic];
+  t.flashcards.sort(()=>Math.random()-0.5);
+  fcState[currentTopic]=0;
+  renderMain(true);
+}
+
+// ============================================================
+// POMODORO
+// ============================================================
+function togglePomo(){ document.getElementById('pomo-overlay').classList.toggle('show'); }
+function togglePomoTimer(){
+  const btn = document.querySelector('.pomo-btn.start');
+  if(pomoRunning){
+    clearInterval(pomoInterval); pomoRunning=false;
+    btn.textContent='▶ Resume';
+  } else {
+    pomoRunning=true; btn.textContent='⏸ Pause';
+    const total = pomoMode==='focus'?25*60:5*60;
+    pomoInterval=setInterval(()=>{
+      pomoSecs--;
+      if(pomoSecs<=0){
+        clearInterval(pomoInterval); pomoRunning=false;
+        btn.textContent='▶ Start';
+        if(pomoMode==='focus'){ addXP(25); pomoMode='break'; pomoSecs=5*60; alert('⏰ Focus session done! +25 XP. Take a 5-min break!'); }
+        else { pomoMode='focus'; pomoSecs=25*60; alert('☕ Break over! Start another focus session.'); }
+        updatePomoDisplay(pomoMode==='focus'?25*60:5*60);
+      }
+      updatePomoDisplay(total);
+    },1000);
+  }
+}
+function updatePomoDisplay(total){
+  const m=Math.floor(pomoSecs/60), s=pomoSecs%60;
+  document.getElementById('pomo-time').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  document.getElementById('pomo-label').textContent=pomoMode==='focus'?'FOCUS SESSION':'BREAK TIME';
+  document.getElementById('pomo-mode-text').textContent=pomoMode==='focus'?'Stay focused — you\'ve got this!':'Rest your eyes. Stretch!';
+  document.getElementById('pomo-fill').style.width=(pomoSecs/total*100)+'%';
+}
+function resetPomo(){
+  clearInterval(pomoInterval); pomoRunning=false;
+  pomoMode='focus'; pomoSecs=25*60;
+  document.querySelector('.pomo-btn.start').textContent='▶ Start';
+  updatePomoDisplay(25*60);
+}
+
+// ============================================================
+// AI TUTOR
+// ============================================================
+function toggleAI(){ document.getElementById('ai-panel').classList.toggle('show'); }
+function saveKey(){ aiKey=document.getElementById('ai-key').value.trim(); if(aiKey) document.getElementById('ai-key').value='••••••••••••••'; }
+async function sendAI(){
+  const input = document.getElementById('ai-input');
+  const msg = input.value.trim(); if(!msg) return;
+  if(!aiKey){ appendAIMsg('bot','Please paste your Anthropic API key first!'); return; }
+  input.value='';
+  appendAIMsg('user', msg);
+  appendAIMsg('bot','Thinking... 🔍', true);
+  aiHistory.push({role:'user',content:msg});
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':aiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:'You are an expert geometry tutor. Explain concepts clearly with examples. Use plain text, avoid markdown.',
+        messages:aiHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text||'Sorry, I had trouble with that.';
+    aiHistory.push({role:'assistant',content:reply});
+    const msgs = document.getElementById('ai-messages');
+    msgs.lastChild.remove();
+    appendAIMsg('bot', reply);
+  } catch(e){ document.getElementById('ai-messages').lastChild.remove(); appendAIMsg('bot','Error: '+e.message); }
+}
+function appendAIMsg(role, text, thinking=false){
+  const msgs = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className='ai-msg '+role+(thinking?' thinking':'');
+  div.textContent=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+document.getElementById('ai-input').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();} });
+
+// ============================================================
+// INIT
+// ============================================================
+renderSidebar();
+renderMain();
+</script>
+</body>
+</html>
